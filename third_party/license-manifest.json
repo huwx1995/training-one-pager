@@ -1,0 +1,525 @@
+[
+  {
+    "component": "Pillow",
+    "version": "12.3.0",
+    "file": "third_party/licenses/Pillow-12.3.0/LICENSE",
+    "source": "Installed distribution license file; pillow-12.3.0.dist-info/licenses/LICENSE",
+    "sha256": "dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "python-docx",
+    "version": "1.2.0",
+    "file": "third_party/licenses/python-docx-1.2.0/LICENSE",
+    "source": "Installed distribution license file; python_docx-1.2.0.dist-info/licenses/LICENSE",
+    "sha256": "7652f271e46d0d533e9dc463f3b5fcbdcacf4d6a9c8d6b554d15efd0f37f6132",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "python-pptx",
+    "version": "1.0.2",
+    "file": "third_party/licenses/python-pptx-1.0.2/LICENSE",
+    "source": "Installed distribution license file; python_pptx-1.0.2.dist-info/LICENSE",
+    "sha256": "7652f271e46d0d533e9dc463f3b5fcbdcacf4d6a9c8d6b554d15efd0f37f6132",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "pypdf",
+    "version": "6.10.0",
+    "file": "third_party/licenses/pypdf-6.10.0/LICENSE",
+    "source": "Installed distribution license file; pypdf-6.10.0.dist-info/licenses/LICENSE",
+    "sha256": "a97ac230e5f33ef10a5367a850eb01f91f1a0b064e34742c7794d2294557f524",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "PyMuPDF",
+    "version": "1.28.2",
+    "file": "third_party/licenses/PyMuPDF-1.28.2/COPYING",
+    "source": "Installed distribution license file; pymupdf-1.28.2.dist-info/COPYING",
+    "sha256": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "xlrd",
+    "version": "2.0.2",
+    "file": "third_party/licenses/xlrd-2.0.2/LICENSE",
+    "source": "Installed distribution license file; xlrd-2.0.2.dist-info/LICENSE",
+    "sha256": "b5a5dbce60265e305a815a6cb83ed07f24519d8ba644f2a307994488bced8815",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "lxml",
+    "version": "6.1.1",
+    "file": "third_party/licenses/lxml-6.1.1/LICENSE.txt",
+    "source": "Installed distribution license file; lxml-6.1.1.dist-info/licenses/LICENSE.txt",
+    "sha256": "8fc2b568133516e46845d2147917adeee1648e70ae9ab5ed6c5417afef4ce855",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "lxml",
+    "version": "6.1.1",
+    "file": "third_party/licenses/lxml-6.1.1/LICENSES.txt",
+    "source": "Installed distribution license file; lxml-6.1.1.dist-info/licenses/LICENSES.txt",
+    "sha256": "41d49dd406aa0e1548a6d5f21a30d6bf638b3cd96eb7289dd348d83ed2e40392",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "XlsxWriter",
+    "version": "3.2.9",
+    "file": "third_party/licenses/XlsxWriter-3.2.9/LICENSE.txt",
+    "source": "Installed distribution license file; xlsxwriter-3.2.9.dist-info/LICENSE.txt",
+    "sha256": "cf08b60a4ded986b58a617cb8304373bda5c4eff42fb4e30d7597b616e116e87",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "typing_extensions",
+    "version": "4.16.0",
+    "file": "third_party/licenses/typing_extensions-4.16.0/LICENSE",
+    "source": "Installed distribution license file; typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+    "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "reportlab",
+    "version": "4.4.9",
+    "file": "third_party/licenses/reportlab-4.4.9/LICENSE",
+    "source": "Installed distribution license file; reportlab-4.4.9.dist-info/licenses/LICENSE",
+    "sha256": "ef831761646313921375fc2cb888e8eeaf7da213d0b92852c10c42f3a0b4d138",
+    "scope": "development only"
+  },
+  {
+    "component": "charset-normalizer",
+    "version": "3.5.2",
+    "file": "third_party/licenses/charset-normalizer-3.5.2/LICENSE",
+    "source": "Installed distribution license file; charset_normalizer-3.5.2.dist-info/licenses/LICENSE",
+    "sha256": "6d0d41bfe170ac6c7dc248c9a63e254d0fb45a60d50a8257d0af92c6e249b887",
+    "scope": "development only"
+  },
+  {
+    "component": "openpyxl",
+    "version": "3.1.5",
+    "file": "third_party/licenses/openpyxl-3.1.5/LICENCE.rst",
+    "source": "PyPI openpyxl 3.1.5 source distribution (archive SHA-256 verified against PyPI metadata)",
+    "sha256": "0c84bb42f5d367e5ebf9fc2dde35b16141df5ee0fdc189250858bc6c5560f69e",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "et_xmlfile",
+    "version": "2.0.0",
+    "file": "third_party/licenses/et_xmlfile-2.0.0/AUTHORS.txt",
+    "source": "PyPI et_xmlfile 2.0.0 source distribution (archive SHA-256 verified against PyPI metadata)",
+    "sha256": "7f038029ea5463605dd2278d300099a381bce9e90dda83ccab2042346b6c8107",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "et_xmlfile",
+    "version": "2.0.0",
+    "file": "third_party/licenses/et_xmlfile-2.0.0/LICENCE.python",
+    "source": "PyPI et_xmlfile 2.0.0 source distribution (archive SHA-256 verified against PyPI metadata)",
+    "sha256": "4ccdaaebc0f44b83720ec0399bb7ab329adce067dd62f73c5535a2dc05628ab2",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "et_xmlfile",
+    "version": "2.0.0",
+    "file": "third_party/licenses/et_xmlfile-2.0.0/LICENCE.rst",
+    "source": "PyPI et_xmlfile 2.0.0 source distribution (archive SHA-256 verified against PyPI metadata)",
+    "sha256": "0c84bb42f5d367e5ebf9fc2dde35b16141df5ee0fdc189250858bc6c5560f69e",
+    "scope": "runtime dependency"
+  },
+  {
+    "component": "whisper.cpp-LICENSE",
+    "version": "upstream text retrieved 2026-11-06",
+    "file": "third_party/licenses/whisper.cpp-LICENSE",
+    "source": "https://github.com/ggml-org/whisper.cpp/blob/master/LICENSE",
+    "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d",
+    "scope": "reference; exact binary versions not yet selected"
+  },
+  {
+    "component": "Whisper-LICENSE",
+    "version": "upstream text retrieved 2026-11-06",
+    "file": "third_party/licenses/Whisper-LICENSE",
+    "source": "https://github.com/openai/whisper/blob/main/LICENSE",
+    "sha256": "b5d65a59060e68c4ff940e1eddfa6f94b2d68fdf58ed7f4dd57721c997e35e9d",
+    "scope": "reference; exact binary versions not yet selected"
+  },
+  {
+    "component": "AGPL-3.0.txt",
+    "version": "upstream text retrieved 2026-11-06",
+    "file": "third_party/licenses/AGPL-3.0.txt",
+    "source": "GNU AGPL v3 standard text; GNU official URL with SPDX text mirror fallback",
+    "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+    "scope": "reference; exact binary versions not yet selected"
+  },
+  {
+    "component": "xz-5.4.3",
+    "file": "third_party/licenses/xz-5.4.3/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "72d7ef9c98be319fd34ce88b45203b36d5936f9c49e82bf3198ffee5e0c7d87e"
+  },
+  {
+    "component": "Python-3.12.14",
+    "file": "third_party/licenses/Python-3.12.14/LICENSE.txt",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6"
+  },
+  {
+    "component": "PyInstaller-6.22.3",
+    "file": "third_party/licenses/PyInstaller-6.22.3/COPYING.txt",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "0598064c7d2718e38d7914a7d08343b2fa008e3bea9ebba2aa7a6ffa5900dd64"
+  },
+  {
+    "component": "sqlite",
+    "file": "third_party/licenses/sqlite/LICENSE.md",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "c9053892d578840a196d588ff68baa9bc0f5240eb215fb9cf91cd6b0b3209305"
+  },
+  {
+    "component": "expat-2.8.3",
+    "file": "third_party/licenses/expat-2.8.3/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87"
+  },
+  {
+    "component": "whisper.cpp-1.7.6",
+    "file": "third_party/licenses/whisper.cpp-1.7.6/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "e562a2ddfaf8280537795ac5ecd34e3012b6582a147ef69ba6a6a5c08c84757d"
+  },
+  {
+    "component": "whisper.cpp-1.7.6",
+    "file": "third_party/licenses/whisper.cpp-1.7.6/stb_vorbis.c-LICENSE.txt",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "whisper.cpp-1.7.6",
+    "file": "third_party/licenses/whisper.cpp-1.7.6/miniaudio.h-LICENSE.txt",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "c6aba4ade0407b7cc952ef1253bcac50991bb6eed7b5b8a83c9f5b9d5627d8d6"
+  },
+  {
+    "component": "libxml2-2.14.6",
+    "file": "third_party/licenses/libxml2-2.14.6/Copyright",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626"
+  },
+  {
+    "component": "libxslt-1.1.43",
+    "file": "third_party/licenses/libxslt-1.1.43/Copyright",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "7e48e290b6bfccc2ec1b297023a1d77f2fd87417f71fbb9f50aabef40a851819"
+  },
+  {
+    "component": "FFmpeg-8.1.2",
+    "file": "third_party/licenses/FFmpeg-8.1.2/LICENSE.md",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "2e1d16c72fd74e12063776371da757322f8b77589386532f4fd8634bde7de1af"
+  },
+  {
+    "component": "FFmpeg-8.1.2",
+    "file": "third_party/licenses/FFmpeg-8.1.2/COPYING.LGPLv2.1",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "246041b6ecf9bc32d718a62c57877c78b5eb397b6467e74ed7ae2626ab189c30"
+  },
+  {
+    "component": "bzip2-1.0.8",
+    "file": "third_party/licenses/bzip2-1.0.8/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3"
+  },
+  {
+    "component": "certifi-2026.10.23",
+    "file": "third_party/licenses/certifi-2026.10.23/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7"
+  },
+  {
+    "component": "OpenSSL-3.5.8",
+    "file": "third_party/licenses/OpenSSL-3.5.8/LICENSE.txt",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+  },
+  {
+    "component": "mpdecimal-4.0.0",
+    "file": "third_party/licenses/mpdecimal-4.0.0/COPYRIGHT.txt",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "25329ef0e2a8823b88786a39f168304a65a3138f720ab39ffc1e9fbee67b74a9"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/docs/license.md",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "1412b5e5fb96eaff8676441921586b1fe3951358815ae1780568779cd5714740"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/cmark-gfm/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "c22e885f33b821bddb24cf007145e5540655b6c0f403e49e6c76a93c28e6d9a9"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/lcms2/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "74fe8934cee0e63e8368d4a6b3a703b603e753a62b75b75273572e98a57ebf75"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/freeglut/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "b6593d5ec4c113a274abb85b10e8615895cb0ddb89f7912af5fe5aa8df38a275"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/freetype/LICENSE.TXT",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "bd36c8b474855fa294c2ec5c184544478ef3720aad37d65a6296a4f264fd2d3b"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zint/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "d69af7f2442fcde1c3372cbbb43907fa1f4b3a91ef3899be69dd3a726dc255a4"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/openjpeg/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/brotli/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/harfbuzz/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "ba8f810f2455c2f08e2d56bb49b72f37fcf68f1f4fade38977cfd7372050ad64"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/mujs/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "0ca9b4fbfbcab8ac7d32475890d866efc02f4cffb6b6da5c0e9a0615cc3d82fe"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/tesseract/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zlib/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/curl/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "8c8824f50e73a021f5dde1fccbf69685939247399a33a32abab1fa448c9ddabb"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zxing-cpp/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/jbig2dec/LICENSE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "1bf5258afe453934484fd0cea97508b72301633a6a78b0ae8a9ee44ac78f26d9"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/jbig2dec/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/gumbo-parser/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/extract/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/curl/docs/LICENSE-MIXING.md",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "6f4bfc06c8209f38bb7bd4a16820e94b5c05e9de4e8c14ec094f15dddfaed777"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/mujs/docs/license.html",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "533d750392fdfa8a856732a479f9b267310b4fd31732b21695fa3663444dd344"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/harfbuzz/src/ms-use/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zint/frontend/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zint/debian/copyright",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "edec41dba6f270124ad3ba658dc2514bb1e1a9d8c637b7d676cde361114680eb"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zint/frontend_qt/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zint/backend_tcl/licence.txt",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "b1722b97c78ba93650e62ff02dac8bad2859eaf6d6965ce025510c8c0c508514"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zint/backend_qt/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zint/frontend_qt/res/LICENSE_feathericons",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "7b4fbc0fda4330e71c1c20706b69e69f2c5ea721fcf3791911188e268975b523"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/zint/frontend_qt/res/LICENSE_lucide",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/lcms2/utils/jpgicc/LICENSE_iccjpeg",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "8baac37d14eed89b82ffcb041677dd701164eb5cc0f26e165fe47eb11afa0dca"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/thirdparty/lcms2/plugins/threaded/COPYING.GPL3",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/resources/fonts/droid/NOTICE",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "38751245389e1e23f73e6f5384b5cbe7fa972cc4410c5adc9c04b082a0b9561a"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/resources/fonts/noto/COPYING",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+  },
+  {
+    "component": "MuPDF-1.28.2",
+    "file": "third_party/licenses/MuPDF-1.28.2/resources/fonts/han/LICENSE.txt",
+    "source": "Official fixed-version source/license or installed distribution; see packaging/macos/upstream-sources.json and THIRD_PARTY_NOTICES.md",
+    "scope": "macOS runtime or broader upstream license reference",
+    "sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+  },
+  {
+    "component": "lxml-6.1.1",
+    "file": "third_party/licenses/lxml-6.1.1/upstream/GPL.txt",
+    "source": "Official lxml 6.1.1 source-distribution license attachment; PyPI archive digest verified",
+    "scope": "runtime license reference",
+    "sha256": "32b1062f7da84967e7019d01ab805935caa7ab7321a7ced0e30ebe75e5df1670"
+  },
+  {
+    "component": "lxml-6.1.1",
+    "file": "third_party/licenses/lxml-6.1.1/upstream/BSD.txt",
+    "source": "Official lxml 6.1.1 source-distribution license attachment; PyPI archive digest verified",
+    "scope": "runtime license reference",
+    "sha256": "69edb445c1335a8312d4c09271847e9956d84f0d9f724d125340cc3fad767b2a"
+  },
+  {
+    "component": "lxml-6.1.1",
+    "file": "third_party/licenses/lxml-6.1.1/upstream/elementtree.txt",
+    "source": "Official lxml 6.1.1 source-distribution license attachment; PyPI archive digest verified",
+    "scope": "runtime license reference",
+    "sha256": "0497ae8138811ef4466ede653bab7a59feb3d3c14f9ed50fc33a00aeb5bec32e"
+  }
+]
