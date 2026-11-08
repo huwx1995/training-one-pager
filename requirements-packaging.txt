@@ -1,0 +1,9 @@
+-r requirements-release.txt
+PyInstaller==6.22.3
+pyinstaller-hooks-contrib==2026.9
+altgraph==0.17.5
+macholib==1.16.4
+packaging==26.3
+setuptools==84.2.1
+cmake==4.4.4
+certifi==2026.10.23

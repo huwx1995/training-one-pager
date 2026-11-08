@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>培训一纸通生成工具</title>
+    <link rel="stylesheet" href="./styles.css?v=20261105-preview-overflow1">
+    <link rel="stylesheet" href="./workbench-theme.css?v=20261106-ui3">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">培训“一纸通”工作台</p>
+            <h2>上传培训材料，生成每条都能追溯原文的一纸通</h2>
+          </div>
+        </header>
+
+        <section class="panel model-panel no-print" aria-labelledby="modelSettingsTitle">
+          <div class="panel-title">
+            <h3 id="modelSettingsTitle">模型设置</h3>
+            <div class="model-header-actions">
+              <span id="modelConnectionSummary">DeepSeek Flash · 未连接</span>
+              <button class="ghost" id="modelToggleBtn" type="button" aria-controls="modelSettingsBody" aria-expanded="true">收起设置</button>
+            </div>
+          </div>
+          <div class="model-settings-body" id="modelSettingsBody">
+          <p class="hint">默认选择各平台的快速或轻量模型；有 Flash 时默认 Flash。可尝试更新模型列表；未更新时也能在高级设置中填写新模型 ID。</p>
+          <div class="model-form">
+            <label for="modelProvider">生成方式</label>
+            <select id="modelProvider">
+              <option value="local">本地规则（无需模型）</option>
+              <option value="deepseek" selected>DeepSeek（中国站）</option>
+              <option value="kimi">Kimi（中国站）</option>
+              <option value="qwen">千问 · 阿里云百炼（中国站）</option>
+              <option value="doubao">豆包 · 火山方舟（中国站）</option>
+              <option value="custom">其他服务（自行配置）</option>
+            </select>
+            <label for="modelBaseUrl" class="custom-model-field" hidden>API Base URL</label>
+            <input id="modelBaseUrl" class="custom-model-field" type="url" placeholder="https://服务地址/v1" autocomplete="off" spellcheck="false" hidden>
+            <label for="modelName" class="preset-model-field">具体模型</label>
+            <div class="model-choice-row preset-model-field">
+              <select id="modelName"></select>
+              <button class="ghost" id="refreshModelsBtn" type="button">更新模型列表</button>
+            </div>
+            <label for="customModelName" class="custom-model-field" hidden>模型 ID</label>
+            <input id="customModelName" class="custom-model-field" type="text" placeholder="填写平台提供的模型 ID" autocomplete="off" spellcheck="false" hidden>
+            <label for="apiKeyInput" class="remote-model-field">模型 API Key</label>
+            <div class="model-key-row remote-model-field">
+              <input id="apiKeyInput" type="password" placeholder="在这里粘贴 API Key" autocomplete="off" spellcheck="false">
+              <button class="ghost" id="toggleApiKeyBtn" type="button" aria-label="显示 API Key">显示</button>
+              <button class="primary" id="testApiBtn" type="button">测试并使用</button>
+              <button class="ghost" id="clearApiBtn" type="button" disabled>清除密钥</button>
+            </div>
+            <details id="modelAdvancedSettings" class="model-advanced-settings remote-model-field">
+              <summary>高级设置 · 思考程度与新模型</summary>
+              <label for="modelReasoning">思考程度</label>
+              <select id="modelReasoning"></select>
+              <p class="hint">已知模型优先选择无思考或最低档；新模型使用平台默认模式。提高档位可能增加等待时间。</p>
+              <label for="presetManualModel">手动填写新模型 ID（可选）</label>
+              <input id="presetManualModel" type="text" placeholder="填写后优先使用此模型，并先测试兼容性" autocomplete="off" spellcheck="false">
+              <p class="hint">模型列表暂未更新时，可从平台控制台复制准确的模型 ID；清空此处即可恢复上方的两款候选。</p>
+            </details>
+          </div>
+          <p class="hint" id="modelRecommendation">连接后会显示实际选用的模型。</p>
+          <p class="hint" id="apiStatus" role="status">尚未连接模型；生成时使用本地规则草稿。</p>
+          </div>
+        </section>
+
+        <section class="no-print">
+          <div class="panel upload-panel">
+            <div class="panel-title">
+              <h3>02 / 上传材料</h3>
+              <span id="fileMeta">文档最大 1024MB；录音最大 200MB、120分钟</span>
+            </div>
+            <label class="file-drop">
+              <input id="fileInput" type="file" accept=".ppt,.pptx,.doc,.docx,.pdf,.txt,.xls,.xlsx,.mp3,.m4a,.wav,.flac,.aac,.ogg,.opus,.webm,.mp4">
+              <strong>选择培训文件</strong>
+              <span>支持 PPT、Word、PDF、TXT、Excel 和常见录音格式；Excel 提取单元格内容，录音在本机转写</span>
+            </label>
+            <div class="button-row" id="audioModelRow" hidden>
+              <button class="ghost" id="downloadAudioModelBtn" type="button">下载本地语音模型（约 547MB）</button>
+              <span class="hint" id="audioModelStatus">首次使用录音需要下载一次模型。</span>
+            </div>
+            <label class="audio-terms-row" id="audioTermsRow" hidden>
+              <strong>专业术语提示（可选）</strong>
+              <textarea id="audioTermsInput" rows="2" maxlength="300" placeholder="例如：水彩画、版画、素描画"></textarea>
+              <span class="hint">用逗号分隔，最多 20 项；仅供本机识别参考，不会自动替换转写文字。</span>
+            </label>
+            <div class="button-row">
+              <button class="primary" id="extractBtn" type="button">本地解析材料</button>
+              <button class="ghost" id="clearBtn" type="button">清空材料</button>
+            </div>
+            <p class="hint">新材料解析成功后会删除上一份在工具中的副本；清空材料会删除当前副本。电脑上的原文件不受影响。</p>
+            <p class="hint" id="extractStatus" role="status" aria-live="polite">请先上传文件，然后在本地解析文字和图片。</p>
+          </div>
+        </section>
+
+        <section class="panel parse-panel no-print" id="parsePanel">
+          <div class="panel-title">
+            <h3>03 / 本地解析：文字 + 图片</h3>
+            <span id="parseCount">请先上传并解析材料</span>
+          </div>
+          <div class="redaction-entry parse-entry">
+            <div>
+              <strong>先确认系统从原文件中读出了哪些内容</strong>
+              <p class="hint">这里只检查文字、图片、图表、页码和顺序；所有处理都在本机完成，尚未发送给大模型。</p>
+            </div>
+            <div class="step-action-buttons">
+              <button class="ghost" id="downloadParsedBtn" type="button" disabled>下载解析结果 Word</button>
+              <button class="primary" id="openParseWorkspaceBtn" type="button" disabled>查看本地解析结果</button>
+            </div>
+          </div>
+          <p class="hint" id="parseStatus" role="status" aria-live="polite">完成解析并确认后，才能进入信息脱敏。</p>
+        </section>
+
+        <section class="panel redaction-panel no-print" id="redactionPanel">
+          <div class="panel-title">
+            <h3>04 / 生成前检查：信息脱敏</h3>
+            <span id="redactionCount">请先抽取材料</span>
+          </div>
+          <div class="redaction-entry">
+            <div>
+              <strong>黄色文字和红色图片框就是需要脱敏的内容</strong>
+              <p class="hint">在完整材料中直接检查和调整，最后统一确认。确认前不会把材料发送给大模型服务。</p>
+            </div>
+            <div class="step-action-buttons">
+              <button class="ghost" id="downloadRedactedBtn" type="button" disabled>下载脱敏版 Word</button>
+              <button class="primary" id="openRedactionWorkspaceBtn" type="button" disabled>打开完整脱敏界面</button>
+            </div>
+          </div>
+          <p class="hint" id="redactionStatus" role="status" aria-live="polite">尚未确认，不能发送给大模型服务。</p>
+        </section>
+
+        <section class="panel controls-panel generation-panel no-print">
+          <div class="panel-title">
+            <h3>05 / 设置并生成一纸通</h3>
+            <span>完成脱敏确认后即可生成</span>
+          </div>
+          <select id="audience" hidden><option value="客户经理">客户经理</option></select>
+          <div class="guided-form">
+            <div class="guided-group"><div class="guided-group-head"><strong>内容重点</strong><span>先告诉系统你最想从材料中得到什么</span></div><div class="guided-grid">
+              <label>我的身份<input id="audienceCustom" type="text" maxlength="40" placeholder="例如：客户经理、柜员、培训负责人"></label>
+              <label>重点覆盖的主题<input id="focusInput" type="text" maxlength="120" placeholder="例如：客户准入条件与办理流程"></label>
+              <label class="guided-wide">不需要呈现的章节<input id="excludeSectionsInput" type="text" maxlength="160" placeholder="例如：一、业务概要情况；多个章节用分号分隔"></label>
+              <label class="guided-wide guided-checkbox"><input id="explainTerms" type="checkbox"> 解释材料中的专业术语</label>
+            </div></div>
+            <div class="guided-group"><div class="guided-group-head"><strong>篇幅与表达</strong><span>短篇幅会自动减少栏目，优先保留关键事实</span></div><div class="guided-grid">
+              <label>字数上限<select id="maxChars"><option value="">按模板默认</option><option value="200">200 字以内</option><option value="500">500 字以内</option><option value="800">800 字以内</option><option value="custom">自定义</option></select></label>
+              <label id="customMaxField" hidden>自定义字数<input id="customMaxChars" type="number" min="100" max="2000" step="1" placeholder="100—2000"></label>
+              <label>详解程度<select id="detailDepth"><option value="normal">正常说明</option><option value="detailed">详细解释</option><option value="brief">简要提及</option></select></label>
+              <label>表达方式<select id="writingTone"><option value="plain">通俗易懂</option><option value="formal">制度表述严谨</option><option value="spoken">适合口头讲解</option></select></label>
+            </div></div>
+            <div class="guided-group"><div class="guided-group-head"><strong>版式与保留项</strong><span>选择纯文字或框架图；内容都以原始材料为依据</span></div>
+              <div class="guided-grid"><label>呈现方式<select id="presentationMode"><option value="text">纯文字版</option><option value="framework">框架图版（横向单页）</option></select></label></div>
+              <div class="guided-grid"><label>培训模板<select id="templateType">
+                <option value="knowledge-auto">智能版（自动匹配）</option>
+                <option value="knowledge-product">产品培训版</option>
+                <option value="knowledge-policy">制度培训版</option>
+                <option value="knowledge-operation">操作培训版</option>
+              </select></label></div>
+              <input id="includeArchitecture" type="checkbox" checked hidden>
+              <div class="guided-toggles"><label><input id="includeOverview" type="checkbox" checked> 开头概括核心结论</label><label><input id="includeFullStructure" type="checkbox" checked> 概括全文架构</label><label><input id="includePractice" type="checkbox" checked> 列出实际工作要点</label></div>
+              <div class="guided-grid"><label class="guided-wide">必须逐字保留的原文<input id="mustKeepInput" type="text" maxlength="160" placeholder="例如：7天、归还前清点配件；须与材料中的文字一致，多个用顿号分隔"></label></div>
+            </div>
+            <details><summary>更多要求（可选）</summary><div class="guided-grid">
+              <label>文档类型<select id="documentType">
+                <option value="auto">自动识别</option>
+                <option value="工作汇报">工作汇报</option><option value="项目方案">项目方案</option>
+                <option value="分析报告">分析报告</option><option value="年度总结">年度总结</option>
+                <option value="产品介绍">产品介绍</option><option value="会议纪要">会议纪要</option>
+                <option value="培训材料">培训材料</option>
+              </select></label>
+              <label class="guided-wide">其他<input id="extraRequirements" type="text" maxlength="200" placeholder="补充你的其他生成要求（可选）"></label>
+            </div></details>
+            <div class="requirements-preview"><strong>我的生成要求</strong><p id="requirementsPreview"></p></div>
+            <p class="guidance-advice" id="guidanceAdvice" aria-live="polite"></p>
+            <p class="hint">固定规则：仅依据已确认脱敏的材料；不得编造；关键事实保留出处。重要条件不为凑字数擅自删改，依据不足时标记待核对。</p>
+            <div class="generation-actions"><button class="primary" id="generateBtn" type="button" disabled>按要求生成一纸通</button><button class="ghost cancel-generation" id="cancelGenerateBtn" type="button" hidden>取消生成</button></div>
+          </div>
+          <p class="hint" id="documentTypeStatus">系统将在生成时自动判断材料类型，也可以手动指定。</p>
+          <p class="hint" id="generateStatus" role="status" aria-live="polite">请先上传材料并完成脱敏确认。</p>
+        </section>
+
+        <section class="output-toolbar no-print" id="outputToolbar">
+          <div>
+            <strong>06 / 一纸通成果</strong>
+            <span id="layoutStatus">生成后自动检查是否超出一页</span>
+          </div>
+          <div class="output-actions">
+            <button class="ghost" id="editContactBtn" type="button" disabled>业务联系人</button>
+            <button class="ghost" id="compactBtn" type="button" disabled>一键压缩</button>
+            <button class="ghost" id="pngBtn" type="button" disabled>导出图片</button>
+            <button class="ghost" id="docxBtn" type="button" disabled>导出 Word</button>
+            <button class="ghost" id="markdownBtn" type="button" disabled>导出 Markdown</button>
+            <button class="ghost" id="jsonBtn" type="button" disabled>导出 JSON</button>
+            <button class="primary" id="pdfBtn" type="button" disabled>打印 / 保存 PDF</button>
+          </div>
+          <p class="export-hint" id="exportHint" role="status" hidden></p>
+        </section>
+
+        <section class="split-layout single-output paper-stage">
+          <section class="output-area">
+            <article class="paper" id="paper">
+              <header class="paper-header">
+                <div>
+                  <p id="paperBadge">待生成</p>
+                  <h3 id="paperTitle">一纸通预览</h3>
+                </div>
+                <span id="reviewStatus">待确认</span>
+              </header>
+              <div class="empty-state">
+                <p>生成后，这里会以一页 A4 展示核心结论、关键内容和行动提醒；适合的材料会补充架构图。</p>
+              </div>
+            </article>
+
+            <section class="coverage-review no-print" id="coverageReview" hidden></section>
+
+          </section>
+        </section>
+        <section class="panel qa-panel no-print" id="qaPanel" hidden>
+          <div class="panel-title"><h3>08 / 向材料追问与导出</h3><span>回答带原文出处，可选择纳入一纸通</span></div>
+          <div class="qa-form"><label>补充材料（可选）<input id="supplementInput" type="file" multiple accept=".ppt,.pptx,.doc,.docx,.pdf,.txt,.xls,.xlsx"></label><button class="ghost" id="extractSupplementBtn" type="button">抽取补充材料</button></div>
+          <div class="qa-form"><label>你的问题<textarea id="questionInput" placeholder="例如：材料的核心概念/操作流程/常见问题/关键提醒等是什么"></textarea></label><button class="primary" id="askBtn" type="button">提问</button></div>
+          <p class="hint" id="askStatus" role="status" aria-live="polite">请先生成一纸通，再根据主材料追问。</p>
+          <div class="qa-answer" id="qaAnswer"><p>回答会显示在这里，并保留原文出处。</p></div>
+          <div class="qa-include" id="qaInclude" hidden><label><input id="includeAnswer" type="checkbox"> 将这条问答加入一纸通</label><button class="ghost" id="applyAnswerBtn" type="button" disabled>更新一纸通</button><p class="hint">加入后需重新核对字数、A4 单页和出处；不加入则仅供查阅。</p></div>
+        </section>
+      </section>
+    </main>
+
+    <section class="redaction-workspace parse-workspace no-print" id="parseWorkspace" hidden aria-label="本地解析结果">
+      <header class="redaction-workspace-header parse-workspace-header">
+        <div>
+          <p class="eyebrow">第3步 · 全程本地处理</p>
+          <h2>确认解析结果</h2>
+          <p>请检查页码、文字、图片、图表和先后顺序。这里还没有进行脱敏，也不会向大模型发送内容。</p>
+        </div>
+        <div class="redaction-workspace-header-actions">
+          <button class="ghost" id="closeParseWorkspaceBtn" type="button">暂存并返回</button>
+          <button class="primary" id="confirmParseBtn" type="button" disabled>确认解析并进入脱敏</button>
+        </div>
+      </header>
+      <main class="parse-workspace-body">
+        <section class="simple-redaction-summary parse-result-summary">
+          <div>
+            <strong id="parseWorkspaceCount">请先解析材料</strong>
+            <span id="parseSourceCount">0 段文字 · 0 张图片/图表</span>
+          </div>
+          <p>请核对截图识别的文字。<button class="ghost" id="showAllImagesBtn" type="button" hidden>显示全部图片</button></p>
+        </section>
+        <p class="legacy-preview-warning" id="parseLegacyPreviewWarning" hidden>旧版格式仅提供内容顺序预览，版式可能与原文件不同。</p>
+        <nav class="preview-page-nav" id="parsePreviewPageNav" aria-label="解析结果页码导航"></nav>
+        <div class="source-list source-review simple-document-stream parse-document-stream" id="parseSourceList">
+          <div class="empty-state small">解析后这里会按文件和页码顺序显示文字与图片。</div>
+        </div>
+      </main>
+    </section>
+
+    <section class="redaction-workspace no-print" id="redactionWorkspace" hidden aria-label="生成前脱敏检查">
+      <header class="redaction-workspace-header simple-redaction-header">
+        <div>
+          <p class="eyebrow">第4步 · 生成前检查</p>
+          <h2>检查需要脱敏的内容</h2>
+          <p><strong>黄色文字</strong>和<strong>红色图片框</strong>会被脱敏；没有标记的内容会保留。</p>
+        </div>
+        <div class="redaction-workspace-header-actions simple-redaction-actions">
+          <button class="ghost" id="undoBtn" type="button" disabled>撤销上一步</button>
+          <button class="ghost" id="togglePreviewBtn" type="button" disabled>查看脱敏效果</button>
+          <button class="ghost" id="closeRedactionWorkspaceBtn" type="button">暂存并返回</button>
+          <button class="ghost" id="addSelectionBtn" type="button" disabled>将选中文字设为脱敏</button>
+          <button class="primary" id="confirmRedactionBtn" type="button" disabled>确认脱敏并继续</button>
+        </div>
+      </header>
+
+      <main class="simple-redaction-workspace">
+        <section class="simple-redaction-summary">
+          <div>
+            <strong id="workspaceRedactionCount">请先抽取材料</strong>
+            <span id="sourceCount">0 段 · 0 张图片/图表</span>
+          </div>
+          <p>单击黄色文字可切换全文相同内容；双击只切换当前位置。图片可拖动框选，也可用按钮和坐标输入调整。</p>
+        </section>
+
+        <section class="custom-redaction-terms" aria-label="常用脱敏词语">
+          <strong>常用脱敏词语</strong>
+          <p>每行输入一个词语，添加后会在当前材料中标黄相同文字。词语只在本机处理。</p>
+          <textarea id="customRedactionTermsInput" rows="2" maxlength="5000" placeholder="例如：某客户姓名&#10;某内部项目代号"></textarea>
+          <div class="custom-redaction-terms-actions">
+            <label><input id="saveCustomRedactionTerms" type="checkbox"> 保存到本机，供下次使用</label>
+            <button class="ghost" id="addCustomRedactionTermsBtn" type="button">添加词语</button>
+          </div>
+          <div id="customRedactionTermsList" class="custom-redaction-terms-list"></div>
+          <p class="hint" id="customRedactionTermsStatus" role="status"></p>
+        </section>
+
+        <section class="simple-manual-tools" id="textRedactionToolbar">
+          <p class="selection-note" id="selectionStatus">如有遗漏，请在材料中选中文字，再点击顶部的“将选中文字设为脱敏”。</p>
+        </section>
+
+        <p class="legacy-preview-warning" id="legacyPreviewWarning" hidden>旧版格式仅提供内容顺序预览，版式可能与原文件不同。</p>
+        <nav class="preview-page-nav" id="previewPageNav" aria-label="文档页码导航"></nav>
+        <div class="source-list source-review redaction-full-document simple-document-stream" id="sourceList">
+          <div class="empty-state small">抽取后这里会按文件和页码顺序显示文字与图片。</div>
+        </div>
+
+        <aside class="simple-redaction-note" id="imageRegionControls">
+          <strong>图片脱敏框需人工检查</strong>
+          <span>红框内会显示为马赛克；当前生成只发送脱敏文字，图片不会发送给大模型。</span>
+        </aside>
+      </main>
+
+      <!-- 以下控件仅保留给内部兼容逻辑，不在简化界面中显示。 -->
+      <div class="redaction-compat-controls" hidden>
+        <input id="redactionOperator" value="">
+        <select id="manualSensitiveType"><option value="custom" selected>自定义</option></select>
+        <select id="imageRegionType"><option value="custom" selected>自定义</option></select>
+        <select id="redactionFilter"><option value="all" selected>全部</option></select>
+        <select id="confidenceFilter"><option value="all" selected>全部</option></select>
+        <select id="statusFilter"><option value="all" selected>全部</option></select>
+        <select id="fileFilter"><option value="all" selected>全部</option></select>
+        <button id="confirmVisibleBtn" type="button"></button>
+        <button id="cancelVisibleBtn" type="button"></button>
+        <button id="restoreVisibleBtn" type="button"></button>
+        <button id="redoBtn" type="button"></button>
+        <button id="exportDecisionCsvBtn" type="button"></button>
+        <button id="exportDecisionJsonBtn" type="button"></button>
+        <div id="redactionStats"></div>
+        <div id="candidateSummary"><div id="candidateList"></div></div>
+        <div id="contextReviewView"></div>
+        <div id="documentReviewView"></div>
+        <div id="outboundReviewView"><span id="outboundSummary"></span><div id="outboundSegments"></div></div>
+      </div>
+    </section>
+
+    <dialog id="sourceDialog">
+      <div class="dialog-head">
+        <h3>原文出处</h3>
+        <button id="closeDialogBtn" type="button">关闭</button>
+      </div>
+      <div id="dialogBody"></div>
+    </dialog>
+
+    <style id="printPageStyle"></style>
+    <dialog id="contactDialog" class="contact-dialog">
+      <form method="dialog">
+        <h3>核对业务联系人</h3>
+        <p>以下信息仅在本机从原始材料提取。确认加入后会显示在一纸通及导出文件中；可留空或跳过。</p>
+        <div id="contactCandidates"></div>
+        <label>业务联系人<input id="contactName" maxlength="40" autocomplete="off"></label>
+        <label>联系方式<input id="contactMethod" maxlength="100" autocomplete="off" placeholder="电话、办公号码或邮箱"></label>
+        <p id="contactValidation" class="hint" aria-live="polite"></p>
+        <div class="button-row"><button id="skipContactBtn" type="button" class="ghost">跳过</button><button id="saveContactBtn" type="button" class="primary">确认并加入成稿</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="mixedGroupDialog" class="confirm-dialog" hidden>
+      <h3>脱敏标记</h3>
+      <p id="mixedGroupMessage"></p>
+      <div class="button-row">
+        <button class="ghost" id="keepMixedBtn" type="button">保持当前部分选择</button>
+        <button class="primary" id="confirmWholeGroupBtn" type="button">恢复并确认整组高亮</button>
+      </div>
+    </dialog>
+
+    <script src="./redaction_workflow.js?v=20261104-modules"></script>
+    <script src="./preview_rendering.js?v=20261104-preview"></script>
+    <script src="./one_pager_rendering.js?v=20261105-layouts2"></script>
+    <script src="./app.js?v=20261108-export-name"></script>
+  </body>
+</html>

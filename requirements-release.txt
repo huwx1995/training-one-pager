@@ -1,0 +1,13 @@
+# Versions validated in the development virtual environment on 2026-11-04.
+# Revalidate on each target OS before packaging; this is not a wheel/hash lockfile.
+Pillow==12.3.0
+python-docx==1.2.0
+python-pptx==1.0.2
+pypdf==6.10.0
+PyMuPDF==1.28.2
+openpyxl==3.1.5
+xlrd==2.0.2
+lxml==6.1.1
+et_xmlfile==2.0.0
+XlsxWriter==3.2.9
+typing_extensions==4.16.0
