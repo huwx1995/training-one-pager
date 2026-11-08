@@ -1,0 +1,48 @@
+# macOS
+.DS_Store
+
+# Python generated files
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local virtual environments
+.venv/
+venv/
+env/
+.build-venv/
+
+# Local secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+config.local.json
+settings.env
+
+# Runtime uploads, extracted records, logs, and process files
+uploads/
+*.log
+*.pid
+
+# Editor settings
+.idea/
+.vscode/
+*.swp
+*~
+
+# Materials, model weights and release artifacts
+测试材料/
+发布准备/
+*.bin
+*.gguf
+*.wav
+*.mp3
+*.m4a
+dist/
+build/
+.build/
+*.pem
+*.key
