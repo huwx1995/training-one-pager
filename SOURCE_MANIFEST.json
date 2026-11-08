@@ -1,8 +1,8 @@
 [
   {
     "path": ".github/workflows/check.yml",
-    "bytes": 400,
-    "sha256": "e1c34e96f492f4fdd994c47964b69950fbad469c20bacf0e657edbcd21f2814f"
+    "bytes": 481,
+    "sha256": "e3d666cb06f24ab1019c19b0c0ee3dae36bd4a097502900646ed04b585538a89"
   },
   {
     "path": ".gitignore",
