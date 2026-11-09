@@ -5,8 +5,11 @@ $Tools = Join-Path $BuildRoot 'tools'
 New-Item -ItemType Directory -Force $Tools | Out-Null
 $Whisper = Join-Path $BuildRoot 'upstream/whisper.cpp-1.7.6'
 $WhisperBuild = Join-Path $BuildRoot 'whisper-build'
+$WhisperManifest = (Resolve-Path (Join-Path $PSScriptRoot 'whisper-utf8.manifest')).Path
+$WhisperLinkerFlags = "/MANIFESTINPUT:$WhisperManifest"
 & cmake -S $Whisper -B $WhisperBuild -A x64 `
   -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DBUILD_SHARED_LIBS=OFF `
+  "-DCMAKE_EXE_LINKER_FLAGS=$WhisperLinkerFlags" `
   -DGGML_NATIVE=OFF -DGGML_AVX=OFF -DGGML_AVX2=OFF -DGGML_AVX512=OFF `
   -DGGML_FMA=OFF -DGGML_F16C=OFF -DGGML_OPENMP=OFF -DGGML_LLAMAFILE=OFF `
   -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_SERVER=OFF -DWHISPER_CURL=OFF
@@ -17,6 +20,7 @@ Copy-Item (Join-Path $WhisperBuild 'bin/Release/whisper-cli.exe') $Tools
 $WhisperFastBuild = Join-Path $BuildRoot 'whisper-build-avx2'
 & cmake -S $Whisper -B $WhisperFastBuild -A x64 `
   -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DBUILD_SHARED_LIBS=OFF `
+  "-DCMAKE_EXE_LINKER_FLAGS=$WhisperLinkerFlags" `
   -DGGML_NATIVE=OFF -DGGML_AVX=ON -DGGML_AVX2=ON -DGGML_AVX512=OFF `
   -DGGML_FMA=ON -DGGML_F16C=ON -DGGML_OPENMP=OFF -DGGML_LLAMAFILE=OFF `
   -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_SERVER=OFF -DWHISPER_CURL=OFF

@@ -41,8 +41,8 @@
   },
   {
     "path": "audio_transcriber.py",
-    "bytes": 12281,
-    "sha256": "f2018616add719cf33ffae3dcfccfce0a94fc605949a510c770ee96ebafea334"
+    "bytes": 12685,
+    "sha256": "68e930f562b12f86b0ae002a4a166bd66d644ad9b0749be62afbf8edd373931f"
   },
   {
     "path": "bank_redaction_rules.py",
@@ -171,8 +171,8 @@
   },
   {
     "path": "packaging/windows/build_native.ps1",
-    "bytes": 3591,
-    "sha256": "7bb7cff9cf87502fc3104f64ad247db46f7568b2ae85e19dfe10397bc4ea5091"
+    "bytes": 3838,
+    "sha256": "97b07e4c5e3b8686326dbbeea59e291dbb597c402730319b0099a1c76550b4f8"
   },
   {
     "path": "packaging/windows/build_portable.py",
@@ -206,13 +206,18 @@
   },
   {
     "path": "packaging/windows/smoke_packaged.py",
-    "bytes": 10272,
-    "sha256": "52ce02bf35a8d663e46c900809ce4860b395f0cf0a4f8f4c1b29a121855f8d73"
+    "bytes": 11412,
+    "sha256": "5c0a309e997e284327e811bde6fba5a3b56cf6313f13fae5cfe301d95ad9a918"
   },
   {
     "path": "packaging/windows/source_snapshot.py",
     "bytes": 1705,
     "sha256": "8fbef68ab76e25b8c103bb536b5c55baab4542ec49ef5c097d91032af9f76ac7"
+  },
+  {
+    "path": "packaging/windows/whisper-utf8.manifest",
+    "bytes": 415,
+    "sha256": "9096f05493737f10dadfe77fde5f3a2b997f23716410f8a5ad7c8d50d832692a"
   },
   {
     "path": "platform_runtime.py",
@@ -316,8 +321,8 @@
   },
   {
     "path": "tests/test_audio_workflow.py",
-    "bytes": 14200,
-    "sha256": "3d1edc76fd94cb0c81c2ed3417937cc5ee747fccd3c699ea0c12421c0b422b88"
+    "bytes": 14858,
+    "sha256": "42561b9fec7cd8135d9a2c6934014c5694d9f1c96d0b793be3a798e0b525b85b"
   },
   {
     "path": "tests/test_bank_redaction_rules.py",

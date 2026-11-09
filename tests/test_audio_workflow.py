@@ -12,6 +12,14 @@ import server
 
 
 class AudioWorkflowTests(unittest.TestCase):
+    def test_windows_whisper_threads_scale_with_cpu_and_stay_bounded(self):
+        with patch.object(audio.sys, 'platform', 'win32'):
+            for logical, expected in [(2, 2), (4, 4), (8, 6), (12, 8), (24, 8)]:
+                with patch.object(audio.os, 'cpu_count', return_value=logical):
+                    self.assertEqual(expected, audio.whisper_threads())
+        with patch.object(audio.sys, 'platform', 'darwin'):
+            self.assertIsNone(audio.whisper_threads())
+
     def test_whisper_selects_accelerated_binary_only_when_supported(self):
         tools = {"whisper-cli": "/test/whisper-cli", "whisper-cli-avx2": "/test/whisper-cli-avx2"}
         with patch.object(audio, "bundled_tool", side_effect=tools.get), \
@@ -103,8 +111,11 @@ class AudioWorkflowTests(unittest.TestCase):
         def executable(name, override=""):
             return "fake-whisper" if name == "whisper-cli" else original_executable(name, override)
 
-        with patch.object(audio, "executable", side_effect=executable), patch.object(audio.subprocess, "run", side_effect=run):
+        with patch.object(audio, "executable", side_effect=executable), \
+             patch.object(audio, "whisper_threads", return_value=8), \
+             patch.object(audio.subprocess, "run", side_effect=run):
             result = audio.transcribe(self.sound, 1, model, terms=["水彩画", "素描画"])
+        self.assertEqual("8", whisper_commands[0][whisper_commands[0].index("-t") + 1])
         self.assertEqual("水彩画，素描画", whisper_commands[0][whisper_commands[0].index("--prompt") + 1])
         self.assertEqual([{"text": "这是模拟培训。", "start_ms": 0, "end_ms": 900,
                            "fragments": [{"text": "这是模拟培训", "start_ms": 0, "end_ms": 900}]}], result)

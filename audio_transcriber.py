@@ -84,6 +84,14 @@ def executable(name: str, override: str = "") -> str:
     return result
 
 
+def whisper_threads() -> int | None:
+    """Use more of a Windows CPU without occupying every logical processor."""
+    if sys.platform != "win32":
+        return None
+    logical = os.cpu_count() or 4
+    return min(8, logical, max(4, (logical * 2 + 2) // 3))
+
+
 def probe(path: Path) -> float:
     command = [executable("ffprobe"), "-v", "error", "-show_streams", "-show_format", "-of", "json", str(path)]
     try:
@@ -237,6 +245,9 @@ def transcribe(path: Path, duration: float, model: Path, progress=None, cancelle
                 silences.extend(detected_silences(converted.stderr.decode("utf-8", errors="replace"),
                                                   start * 1000, round(length * 1000)))
                 command = [whisper, "-m", str(model), "-f", str(wav), "-l", "zh", "-oj", "-of", str(output)]
+                threads = whisper_threads()
+                if threads is not None:
+                    command.extend(["-t", str(threads)])
                 if terms:
                     command.extend(["--prompt", "，".join(terms)])
                 run_tool(command,

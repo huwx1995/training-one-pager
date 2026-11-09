@@ -11,6 +11,7 @@ import tempfile
 import time
 import zipfile
 import hashlib
+import shutil
 
 
 def main():
@@ -40,6 +41,24 @@ def main():
         recognized = json.loads(transcript_prefix.with_suffix('.json').read_text(encoding='utf-8'))
         assert any(str(item.get('text', '')).strip() for item in recognized.get('transcription', []))
         print(f'Windows bundled AVX2 speech transcription passed in {time.monotonic() - speech_started:.1f}s', flush=True)
+        # Exercise the exact failure reported by users who unpacked the app below a Chinese directory.
+        unicode_root = root / '中文目录'
+        unicode_root.mkdir()
+        unicode_model = unicode_root / '语音模型.bin'
+        try:
+            os.link(model, unicode_model)
+        except OSError:
+            shutil.copyfile(model, unicode_model)
+        unicode_audio = unicode_root / '录音.wav'
+        shutil.copyfile(sample, unicode_audio)
+        for cli_name in ('whisper-cli-avx2.exe', 'whisper-cli.exe'):
+            unicode_output = unicode_root / cli_name.replace('.exe', '')
+            result = subprocess.run([str(app/'_internal/tools'/cli_name), '-m', str(unicode_model),
+                '-f', str(unicode_audio), '-l', 'en', '-oj', '-of', str(unicode_output)],
+                env=environment, capture_output=True, timeout=180)
+            assert result.returncode == 0, (cli_name, result.returncode, result.stderr[-1000:])
+            assert unicode_output.with_suffix('.json').is_file(), cli_name
+        print('Windows Whisper accepted Chinese model, audio and output paths.', flush=True)
         tls_result = root / 'tls.json'
         subprocess.run([str(executable), '--check-tls-local', '--result-file', str(tls_result)],
                        env=environment, check=True, timeout=30, creationflags=0x08000000)
