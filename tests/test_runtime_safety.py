@@ -76,6 +76,21 @@ class RuntimeSafetyTests(unittest.TestCase):
         finally:
             server.GENERATION_JOBS.pop(job_id, None)
 
+    def test_lite_edition_blocks_audio_routes_and_marks_page(self):
+        with patch.object(server, 'AUDIO_ENABLED', False):
+            for method, path in [('do_GET', '/api/audio/model-status'),
+                                 ('do_POST', '/api/audio/model-download'),
+                                 ('do_POST', '/api/audio/upload')]:
+                handler = self.fake_handler({'Host': '127.0.0.1:8000', 'Content-Length': '0'})
+                handler.path = path
+                getattr(handler, method)()
+                self.assertEqual(404, handler.status)
+            page = self.fake_handler({'Host': '127.0.0.1:8000'})
+            page.path = '/'
+            page.do_GET()
+            self.assertEqual(200, page.status)
+            self.assertIn(b'data-edition="lite"', page.wfile.getvalue())
+
     def test_stale_runtime_is_removed_but_other_directories_remain(self):
         with tempfile.TemporaryDirectory() as root:
             runs = Path(root)
