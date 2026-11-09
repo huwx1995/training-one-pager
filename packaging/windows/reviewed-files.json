@@ -10,6 +10,11 @@
     "sha256": "e3d666cb06f24ab1019c19b0c0ee3dae36bd4a097502900646ed04b585538a89"
   },
   {
+    "path": ".github/workflows/publish-windows-beta4.yml",
+    "bytes": 3326,
+    "sha256": "4be1787fcde0a105454aa536fdb44353211cd2b8316d8265bda0015c16997e56"
+  },
+  {
     "path": ".github/workflows/windows-portable.yml",
     "bytes": 2467,
     "sha256": "f2b9ec40d532bd1c9204cd175643bc6a94cfcbb589aad05cdea9159a581d1f7e"
@@ -26,13 +31,13 @@
   },
   {
     "path": "README.md",
-    "bytes": 5980,
-    "sha256": "1165913dec8ac0ce6724687db1e68dd1ffc121f1ce2429089a08e21eb06233d8"
+    "bytes": 6014,
+    "sha256": "c78840ff82bf0aa67b3a15020b79fc07d7cc16ffad0326ed1eeed48bac39b296"
   },
   {
     "path": "SOURCE_MANIFEST.json",
-    "bytes": 24303,
-    "sha256": "625d960a13908a6f3811e86afc767feed415790d359a85c1377b808c1d03ba16"
+    "bytes": 24471,
+    "sha256": "6b061ce905b0f367f2ddf3c539a47c643405870b120f9cc4fb471d9c0e9f35c1"
   },
   {
     "path": "THIRD_PARTY_NOTICES.md",
@@ -166,8 +171,8 @@
   },
   {
     "path": "packaging/windows/README.md",
-    "bytes": 2056,
-    "sha256": "f59d080507f795e386175ca52290630b6f89694771fed5774eff21c496b3c985"
+    "bytes": 1987,
+    "sha256": "ef893ed176d6d4eb16aff4ae451e2c856dff30debcca921873a7a58a12bbda7c"
   },
   {
     "path": "packaging/windows/build_ffmpeg.sh",

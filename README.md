@@ -1,10 +1,10 @@
 # 培训一纸通
 
-> ⚠️ **系统要求：macOS 14 或更新版本 / Apple 芯片（M 系列）**。当前提供的安装包不适用于 Intel Mac 或 Windows。
+> ⚠️ **系统要求：Mac 版需要 macOS 14 或更新版本及 Apple 芯片（M 系列）；Windows 版需要 Windows 10/11 64 位及 Intel/AMD 处理器。**
 
 把培训文档或录音整理成一页摘要，逐条保留原文出处，支持人工核对、编辑和导出。
 
-**当前状态：0.1.0-beta.3 内测版本，采用 AGPL v3（AGPL-3.0-only）。** [GitHub 仓库](https://github.com/huwx1995/training-one-pager)提供源码；[Releases](https://github.com/huwx1995/training-one-pager/releases)提供内置语音模型的 Apple 芯片 Mac 完整版安装包。Windows 完整版压缩包的构建文件已准备，尚未在 Windows 环境完成构建和验证，不能把构建准备包当作可运行程序。
+**当前状态：内测版本，采用 AGPL v3（AGPL-3.0-only）。** [GitHub 仓库](https://github.com/huwx1995/training-one-pager)提供源码。[Mac 完整版 v0.1.0-beta.3](https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.3)和 [Windows 完整版 v0.1.0-beta.4](https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.4)均内置语音模型，请按电脑系统下载。
 
 ## 能做什么
 
@@ -17,15 +17,15 @@
 
 ## Mac 内测安装
 
-下载本次发行的 `macOS-arm64-full.dmg` 完整版安装包，将“培训一纸通”拖入“应用程序”，再双击打开。工作台会自动在默认浏览器中打开，结束后请在应用控制窗口点击“退出”。
+从上方 Mac 版本页面下载 `macOS-arm64-full.dmg` 完整版安装包，将“培训一纸通”拖入“应用程序”，再双击打开。工作台会自动在默认浏览器中打开，结束后请在应用控制窗口点击“退出”。
 
 安装包自带 Python、音频工具、本地 OCR 和语音模型。旧 DOC/PPT 仍需 LibreOffice 或先另存为新格式。目标 macOS 14 及以上，当前仅在开发 Mac 验证；未做 Developer ID 签名及公证，首次打开可能被系统拦截。核实文件来源后按系统“隐私与安全性”提示处理，不要关闭全局安全保护。
 
 安装版数据位于用户“资源库/Application Support/TrainingOnePager”，可在控制窗口打开。源码版仍使用项目目录的 `uploads/`。构建与验证见 [Mac 构建说明](packaging/macos/README.md)。
 
-## Windows 测试版准备
+## Windows 内测安装
 
-计划只提供带语音模型的 Windows x64 完整版 ZIP，不提供轻量版。构建和验证步骤见 [Windows 构建说明](packaging/windows/README.md)。获得可运行 ZIP 后仍需在普通 Windows 电脑上测试，测试通过前不作为正式下载提供。
+从上方 Windows 版本页面下载 `windows-x64-full.zip` 完整版。解压整个压缩包，打开 `TrainingOnePager` 文件夹，双击 `TrainingOnePager.exe`；请保留同目录下的 `_internal` 和 `sources` 文件夹。Windows 版已在普通 Windows 电脑上完成试用；构建和自动检查见 [Windows 构建说明](packaging/windows/README.md)。
 
 ## 从源码启动
 
@@ -45,7 +45,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe server.py
 ```
 
-打开终端显示的本机地址，默认是 `http://127.0.0.1:8000`。使用期间保留终端，结束时按 Ctrl+C。Mac 可在依赖安装完成后使用 `启动一纸通.command`，默认从 8011 端口启动。Windows 安装及完整功能尚待目标机器验证。
+打开终端显示的本机地址，默认是 `http://127.0.0.1:8000`。使用期间保留终端，结束时按 Ctrl+C。Mac 可在依赖安装完成后使用 `启动一纸通.command`，默认从 8011 端口启动。
 
 ## 第一次体验
 

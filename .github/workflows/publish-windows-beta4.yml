@@ -1,0 +1,65 @@
+name: Publish tested Windows beta.4
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/publish-windows-beta4.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download verified Windows build
+        uses: actions/download-artifact@v4
+        with:
+          name: TrainingOnePager-windows-x64-full-test
+          repository: huwx1995/training-one-pager
+          run-id: 42591038015
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: release-input
+      - name: Check and prepare release files
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd release-input
+          sha256sum -c SHA256SUMS.txt
+          echo 'd7848b162f72996ab68ccd55116755329489b6f3298bb41fadebf41182171157  TrainingOnePager-0.1.0-beta.3-windows-x64-full.zip' | sha256sum -c -
+          unzip -l TrainingOnePager-0.1.0-beta.3-windows-x64-full.zip | grep -F 'TrainingOnePager/TrainingOnePager.exe'
+          unzip -l TrainingOnePager-0.1.0-beta.3-windows-x64-full.zip | grep -F 'TrainingOnePager/_internal/models/ggml-large-v3-turbo-q5_0.bin'
+          mkdir ../release-files
+          cp TrainingOnePager-0.1.0-beta.3-windows-x64-full.zip ../release-files/TrainingOnePager-0.1.0-beta.4-windows-x64-full.zip
+          cp TrainingOnePager-0.1.0-beta.3-windows-source.zip ../release-files/TrainingOnePager-0.1.0-beta.4-windows-source.zip
+          cd ../release-files
+          sha256sum *.zip > SHA256SUMS.txt
+      - name: Publish prerelease
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if gh release view v0.1.0-beta.4 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo 'Release v0.1.0-beta.4 already exists; refusing to replace it.'
+            exit 1
+          fi
+          printf '%s\n' \
+            'Windows 10/11 64 位 Intel/AMD 完整版，内置语音模型、音频工具和中文 OCR。' \
+            '' \
+            '下载 windows-x64-full.zip，完整解压后双击 TrainingOnePager/TrainingOnePager.exe。请保留同目录的 _internal 与 sources 文件夹。' \
+            '' \
+            '此 ZIP 与通过自动检查及普通 Windows 电脑试用的构建产物字节完全相同；仅把下载文件名从 beta.3 改为 beta.4，便于区分正式下载页。内附源码包仍保留构建时的 beta.3 标识。校验值见 SHA256SUMS.txt。' \
+            '' \
+            '对应源码：本 Release 的 Source code，以及随包和单独提供的 windows-source.zip。第三方组件的版本与来源见仓库构建脚本和许可说明。' \
+            '' \
+            'Apple 芯片 Mac 用户请继续下载 https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.3 中的 macOS-arm64-full.dmg。本 Windows 压缩包不适用于 Mac。' \
+            '' \
+            '此版本尚未签名；首次打开如遇系统安全提示，请核对下载来源。' \
+            > release-notes.md
+          gh release create v0.1.0-beta.4 release-files/* \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title 'Windows x64 完整版 v0.1.0-beta.4' \
+            --notes-file release-notes.md \
+            --prerelease
