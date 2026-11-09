@@ -43,6 +43,8 @@ uploads/
 *.m4a
 dist/
 build/
+.windows-build/
+dist-windows/
 .build/
 *.pem
 *.key

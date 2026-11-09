@@ -1,0 +1,6 @@
+-r ../../requirements-release.txt
+-r ../../requirements-dev.txt
+PyInstaller==6.22.3
+pyinstaller-hooks-contrib==2026.9
+certifi==2026.10.23
+cmake==4.4.4

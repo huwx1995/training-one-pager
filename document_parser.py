@@ -4,9 +4,11 @@ import hashlib
 from html.parser import HTMLParser
 import io
 import json
+import os
 import re
 import shutil
 import subprocess
+from platform_runtime import run_tool
 import sys
 import tempfile
 import zipfile
@@ -14,7 +16,7 @@ from datetime import date, datetime, time
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Callable
-from app_paths import bundled_tool
+from app_paths import bundled_tool, resource_dir
 from xml.etree import ElementTree as ET
 
 
@@ -26,6 +28,13 @@ def _local_tool(name: str) -> str | None:
     bundled = bundled_tool(name)
     if bundled:
         return bundled
+    if name == "soffice" and sys.platform == "win32":
+        for variable in ("PROGRAMFILES", "PROGRAMFILES(X86)"):
+            directory = os.getenv(variable)
+            if directory:
+                office = Path(directory) / "LibreOffice/program/soffice.exe"
+                if office.is_file():
+                    return str(office)
     if name == "soffice":
         office = Path("/Applications/LibreOffice.app/Contents/MacOS/soffice")
         if office.is_file():
@@ -54,7 +63,7 @@ def _render_pptx_pages(path: Path, pages: set[int]) -> dict[int, bytes]:
         with tempfile.TemporaryDirectory(prefix="onepager-pptx-") as temp_name:
             temp_dir = Path(temp_name)
             profile_dir = temp_dir / "profile"
-            subprocess.run(
+            run_tool(
                 [soffice, f"-env:UserInstallation={profile_dir.as_uri()}", "--headless",
                  "--convert-to", "pdf", "--outdir", str(temp_dir), str(path)],
                 check=True, capture_output=True, timeout=90,
@@ -64,7 +73,7 @@ def _render_pptx_pages(path: Path, pages: set[int]) -> dict[int, bytes]:
                 return {}
             for page in sorted(pages):
                 output_prefix = temp_dir / f"slide-{page}"
-                subprocess.run(
+                run_tool(
                     [pdftoppm, "-f", str(page), "-l", str(page), "-singlefile", "-png", "-r", "144",
                      str(pdf_path), str(output_prefix)],
                     check=True, capture_output=True, timeout=45,
@@ -222,7 +231,7 @@ def _recognize_images(paths: list[Path]) -> tuple[dict[str, list[str]], bool]:
     native_ocr = bundled_tool("local-ocr")
     if native_ocr:
         try:
-            result = subprocess.run([native_ocr, *(str(path) for path in paths)],
+            result = run_tool([native_ocr, *(str(path) for path in paths)],
                 check=True, capture_output=True, timeout=max(30, len(paths) * 5))
             return json.loads(result.stdout), True
         except (OSError, subprocess.SubprocessError, ValueError, json.JSONDecodeError):
@@ -232,12 +241,12 @@ def _recognize_images(paths: list[Path]) -> tuple[dict[str, list[str]], bool]:
             with tempfile.TemporaryDirectory(prefix="onepager-ocr-") as temp_name:
                 executable = Path(temp_name) / "local-ocr"
                 source = Path(__file__).with_name("local_ocr.m")
-                subprocess.run(["clang", "-fobjc-arc", "-framework", "Foundation", "-framework", "Vision",
+                run_tool(["clang", "-fobjc-arc", "-framework", "Foundation", "-framework", "Vision",
                                 str(source), "-o", str(executable)], check=True, capture_output=True, timeout=30)
                 output: dict[str, list[str]] = {}
                 for start in range(0, len(paths), 100):
                     batch = paths[start:start + 100]
-                    completed = subprocess.run([str(executable), *(str(path) for path in batch)],
+                    completed = run_tool([str(executable), *(str(path) for path in batch)],
                                                check=True, capture_output=True, timeout=max(30, len(batch) * 5))
                     output.update(json.loads(completed.stdout))
                 return output, True
@@ -246,7 +255,9 @@ def _recognize_images(paths: list[Path]) -> tuple[dict[str, list[str]], bool]:
     tesseract = _local_tool("tesseract")
     if tesseract:
         try:
-            languages = subprocess.run([tesseract, "--list-langs"], capture_output=True, text=True,
+            bundled_data = resource_dir() / "tessdata"
+            tessdata_args = ["--tessdata-dir", str(bundled_data)] if bundled_data.is_dir() else []
+            languages = run_tool([tesseract, *tessdata_args, "--list-langs"], capture_output=True, text=True,
                                        check=True, timeout=10).stdout
             if "chi_sim" in languages or "chi_tra" in languages:
                 language = "chi_sim" if "chi_sim" in languages else "chi_tra"
@@ -254,7 +265,7 @@ def _recognize_images(paths: list[Path]) -> tuple[dict[str, list[str]], bool]:
                     language += "+eng"
                 output = {}
                 for path in paths:
-                    completed = subprocess.run([tesseract, str(path), "stdout", "-l", language],
+                    completed = run_tool([tesseract, str(path), "stdout", *tessdata_args, "-l", language],
                                                capture_output=True, text=True, check=True, timeout=30)
                     output[str(path)] = completed.stdout.splitlines()
                 return output, True
@@ -1190,7 +1201,7 @@ def parse_legacy_ppt(path: Path, file_name: str, document_id: str, segment_cls: 
         temp_dir = Path(temp_name)
         converted = temp_dir / f"{path.stem}.pptx"
         try:
-            subprocess.run(
+            run_tool(
                 [soffice, f"-env:UserInstallation={(temp_dir / 'profile').as_uri()}",
                  "--headless", "--convert-to", "pptx", "--outdir", str(temp_dir), str(path)],
                 check=True, capture_output=True, timeout=120,
@@ -1216,7 +1227,7 @@ def parse_legacy_doc(path: Path, file_name: str, document_id: str, segment_cls: 
         temp_dir = Path(temp_name)
         converted = temp_dir / f"{path.stem}.docx"
         try:
-            subprocess.run(
+            run_tool(
                 [soffice, f"-env:UserInstallation={(temp_dir / 'profile').as_uri()}",
                  "--headless", "--convert-to", "docx", "--outdir", str(temp_dir), str(path)],
                 check=True, capture_output=True, timeout=120,

@@ -2,7 +2,7 @@
 
 这套文件以已发布的 Mac `v0.1.0-beta.3` 应用源码为基础，制作 Windows 10/11 x64 完整版。目标是一个 ZIP：解压整个 `TrainingOnePager` 文件夹，双击其中的 `TrainingOnePager.exe`，语音模型、音频工具和中文 OCR 均随包提供。只提供完整版；旧版 DOC/PPT 仍需 LibreOffice 或先另存为 DOCX/PPTX。
 
-当前交付物是**构建准备文件**，还不是可运行的 Windows 程序。PyInstaller 必须在 Windows 上运行。仓库里的 `Build Windows complete test ZIP` GitHub Actions 使用 Windows 2022 构建机，人工触发后只上传临时测试 Artifact，不自动发布 Release。先检查构建及合成材料测试，再请普通 Windows 10/11 电脑试用；测试通过后才能向朋友分发。
+当前交付物是**构建准备文件**，还不是可运行的 Windows 程序。PyInstaller 必须在 Windows 上运行。仓库里的 `Build Windows complete test ZIP` GitHub Actions 使用 Windows 2022 构建机；测试分支提交后自动试构建，合入主分支后也可手动触发。它只上传临时测试 Artifact，不自动发布 Release。先检查构建及合成材料测试，再请普通 Windows 10/11 电脑试用；测试通过后才能向朋友分发。
 
 构建流程：校验审查清单 → 安装 Python 依赖 → 运行回归测试 → 下载并校验固定上游源码、语音模型和 OCR 数据 → 编译 Windows FFmpeg、whisper.cpp 和 Tesseract → PyInstaller 冻结程序 → 把模型及项目源码放入完整包 → 用合成材料检查启动、解析、导出、音频工具、OCR、TLS 和退出 → 上传 ZIP、源码包和 SHA256 校验值。
 

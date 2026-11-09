@@ -46,6 +46,7 @@ from docx_export import (
 )
 import audio_transcriber as audio
 from app_paths import resource_dir, user_data_dir
+from platform_runtime import process_alive as _process_alive
 
 
 ROOT = resource_dir()
@@ -53,15 +54,6 @@ PROTOTYPE = ROOT / "prototype"
 DATA_DIR = user_data_dir()
 RUNS_DIR = DATA_DIR / "runs"
 RUNS_DIR.mkdir(parents=True, exist_ok=True)
-
-def _process_alive(pid: int) -> bool:
-    try:
-        os.kill(pid, 0)
-        return True
-    except ProcessLookupError:
-        return False
-    except PermissionError:
-        return True
 
 def _cleanup_stale_runs() -> None:
     for directory in RUNS_DIR.iterdir():

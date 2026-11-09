@@ -1,0 +1,2 @@
+# Preserve reviewed byte hashes on Windows, including upstream notice files.
+* -text

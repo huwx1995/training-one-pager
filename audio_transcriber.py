@@ -6,6 +6,7 @@ import os
 import re
 import shutil
 import subprocess
+from platform_runtime import run_tool
 import tempfile
 from pathlib import Path
 from app_paths import bundled_tool, resource_dir
@@ -71,7 +72,7 @@ def executable(name: str, override: str = "") -> str:
 def probe(path: Path) -> float:
     command = [executable("ffprobe"), "-v", "error", "-show_streams", "-show_format", "-of", "json", str(path)]
     try:
-        result = subprocess.run(command, capture_output=True, text=True, check=True, timeout=30)
+        result = run_tool(command, capture_output=True, text=True, check=True, timeout=30)
         data = json.loads(result.stdout)
         if not any(item.get("codec_type") == "audio" for item in data.get("streams", [])):
             raise ValueError("文件中没有音频轨。")
@@ -213,7 +214,7 @@ def transcribe(path: Path, duration: float, model: Path, progress=None, cancelle
             if progress:
                 progress(number, count)
             try:
-                converted = subprocess.run([ffmpeg, "-hide_banner", "-nostats", "-nostdin", "-v", "info",
+                converted = run_tool([ffmpeg, "-hide_banner", "-nostats", "-nostdin", "-v", "info",
                                             "-ss", str(start), "-i", str(path), "-t", str(length),
                                             "-af", "asetpts=PTS-STARTPTS,silencedetect=noise=-38dB:d=0.45",
                                             "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", str(wav)],
@@ -223,7 +224,7 @@ def transcribe(path: Path, duration: float, model: Path, progress=None, cancelle
                 command = [whisper, "-m", str(model), "-f", str(wav), "-l", "zh", "-oj", "-of", str(output)]
                 if terms:
                     command.extend(["--prompt", "，".join(terms)])
-                subprocess.run(command,
+                run_tool(command,
                                capture_output=True, check=True, timeout=max(240, int(length * 8)))
                 raw = json.loads(output.with_suffix(".json").read_text(encoding="utf-8"))
             except (OSError, subprocess.SubprocessError, ValueError, json.JSONDecodeError) as exc:
