@@ -206,8 +206,8 @@
   },
   {
     "path": "packaging/windows/smoke_packaged.py",
-    "bytes": 11412,
-    "sha256": "5c0a309e997e284327e811bde6fba5a3b56cf6313f13fae5cfe301d95ad9a918"
+    "bytes": 12530,
+    "sha256": "ad2fc6d154ea3495e7e28afba1975ea74d7d3f9684ca404b968e936dabe32cfe"
   },
   {
     "path": "packaging/windows/source_snapshot.py",

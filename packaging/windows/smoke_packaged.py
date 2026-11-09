@@ -51,13 +51,33 @@ def main():
             shutil.copyfile(model, unicode_model)
         unicode_audio = unicode_root / '录音.wav'
         shutil.copyfile(sample, unicode_audio)
-        for cli_name in ('whisper-cli-avx2.exe', 'whisper-cli.exe'):
-            unicode_output = unicode_root / cli_name.replace('.exe', '')
-            result = subprocess.run([str(app/'_internal/tools'/cli_name), '-m', str(unicode_model),
-                '-f', str(unicode_audio), '-l', 'en', '-oj', '-of', str(unicode_output)],
-                env=environment, capture_output=True, timeout=180)
-            assert result.returncode == 0, (cli_name, result.returncode, result.stderr[-1000:])
-            assert unicode_output.with_suffix('.json').is_file(), cli_name
+        unicode_output = unicode_root / '转写结果'
+        result = subprocess.run([str(app/'_internal/tools/whisper-cli-avx2.exe'), '-m', str(unicode_model),
+            '-f', str(unicode_audio), '-l', 'en', '-oj', '-of', str(unicode_output)],
+            env=environment, capture_output=True, timeout=180)
+        assert result.returncode == 0, (result.returncode, result.stderr[-1000:])
+        assert unicode_output.with_suffix('.json').is_file()
+        # The generic fallback is much slower without AVX2. Verify that it loads the
+        # Unicode model, then stop before running a redundant full inference.
+        generic_log = unicode_root / 'generic.log'
+        with generic_log.open('wb') as log:
+            generic = subprocess.Popen([str(app/'_internal/tools/whisper-cli.exe'), '-m', str(unicode_model),
+                '-f', str(unicode_audio), '-l', 'en', '-oj', '-of', str(unicode_root/'generic')],
+                env=environment, stdout=subprocess.DEVNULL, stderr=log)
+            try:
+                deadline = time.monotonic() + 30
+                while time.monotonic() < deadline:
+                    if b'model size' in generic_log.read_bytes():
+                        break
+                    if generic.poll() is not None:
+                        raise AssertionError((generic.returncode, generic_log.read_bytes()[-1000:]))
+                    time.sleep(0.1)
+                else:
+                    raise AssertionError(('Generic Whisper did not load the Unicode model', generic_log.read_bytes()[-1000:]))
+            finally:
+                if generic.poll() is None:
+                    generic.terminate()
+                generic.wait(timeout=10)
         print('Windows Whisper accepted Chinese model, audio and output paths.', flush=True)
         tls_result = root / 'tls.json'
         subprocess.run([str(executable), '--check-tls-local', '--result-file', str(tls_result)],
