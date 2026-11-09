@@ -19,7 +19,7 @@ cp ffmpeg.exe ffprobe.exe "$build_root/tools/"
 pacman -Q mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-crt \
   > "$build_root/mingw-toolchain.txt"
 mkdir -p "$build_root/windows-licenses/mingw"
-pacman -Ql mingw-w64-ucrt-x86_64-crt mingw-w64-ucrt-x86_64-gcc-libs | \
+pacman -Ql mingw-w64-ucrt-x86_64-crt mingw-w64-ucrt-x86_64-gcc | \
   awk '$2 ~ /share\/licenses\/.*[^\/]$/ {print $2}' | while IFS= read -r file; do
     if [ -f "$file" ]; then
       relative="${file#*/share/licenses/}"

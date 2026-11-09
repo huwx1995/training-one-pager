@@ -32,7 +32,7 @@
   {
     "path": "SOURCE_MANIFEST.json",
     "bytes": 24139,
-    "sha256": "642ad5cd822cc8621ae4b341f78e858f42c2793baf02aff7b8dfd824c9af101e"
+    "sha256": "a12551c9b0d9da0ff73495dcd514319d6a2797635087dbff000ad16c96df69cf"
   },
   {
     "path": "THIRD_PARTY_NOTICES.md",
@@ -171,8 +171,8 @@
   },
   {
     "path": "packaging/windows/build_ffmpeg.sh",
-    "bytes": 1602,
-    "sha256": "39f6e4cb683f6e42e0c31d501abcc00b91a4462581a4011d8651b715238b2c76"
+    "bytes": 1597,
+    "sha256": "f824a7220419183b13590b92cf57e24f7980cdf88c3235af9945ba0300789b38"
   },
   {
     "path": "packaging/windows/build_native.ps1",
