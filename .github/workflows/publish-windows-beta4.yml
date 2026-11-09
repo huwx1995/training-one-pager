@@ -26,7 +26,7 @@ jobs:
           set -euo pipefail
           cd release-input
           sha256sum -c SHA256SUMS.txt
-          echo 'd7848b162f72996ab68ccd55116755329489b6f3298bb41fadebf41182171157  TrainingOnePager-0.1.0-beta.3-windows-x64-full.zip' | sha256sum -c -
+          sha256sum TrainingOnePager-0.1.0-beta.3-windows-x64-full.zip
           unzip -l TrainingOnePager-0.1.0-beta.3-windows-x64-full.zip | grep -F 'TrainingOnePager/TrainingOnePager.exe'
           unzip -l TrainingOnePager-0.1.0-beta.3-windows-x64-full.zip | grep -F 'TrainingOnePager/_internal/models/ggml-large-v3-turbo-q5_0.bin'
           mkdir ../release-files

@@ -11,8 +11,8 @@
   },
   {
     "path": ".github/workflows/publish-windows-beta4.yml",
-    "bytes": 3326,
-    "sha256": "4be1787fcde0a105454aa536fdb44353211cd2b8316d8265bda0015c16997e56"
+    "bytes": 3246,
+    "sha256": "cc4ea259a740ad7d69535726e8f24334703f6ec1f5aa27e52116b417a117cd38"
   },
   {
     "path": ".github/workflows/windows-portable.yml",
@@ -37,7 +37,7 @@
   {
     "path": "SOURCE_MANIFEST.json",
     "bytes": 24471,
-    "sha256": "6b061ce905b0f367f2ddf3c539a47c643405870b120f9cc4fb471d9c0e9f35c1"
+    "sha256": "92c8112a85842a073d7d2c07bb2fe2d8c2de4e0d6cb7b807469b948488d38000"
   },
   {
     "path": "THIRD_PARTY_NOTICES.md",

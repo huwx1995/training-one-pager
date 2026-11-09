@@ -11,8 +11,8 @@
   },
   {
     "path": ".github/workflows/publish-windows-beta4.yml",
-    "bytes": 3326,
-    "sha256": "4be1787fcde0a105454aa536fdb44353211cd2b8316d8265bda0015c16997e56"
+    "bytes": 3246,
+    "sha256": "cc4ea259a740ad7d69535726e8f24334703f6ec1f5aa27e52116b417a117cd38"
   },
   {
     "path": ".github/workflows/windows-portable.yml",
