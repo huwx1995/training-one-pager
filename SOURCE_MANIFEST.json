@@ -12,7 +12,7 @@
   {
     "path": ".github/workflows/macos-lite.yml",
     "bytes": 2022,
-    "sha256": "7c1fd0643ea5bcd62b70d2d734a66c76254d6df149d606e7d6d0b83ba437f977"
+    "sha256": "f38b413884a10bedbb6da56b13ccf69df926954d5659e62d8e819993a9372b59"
   },
   {
     "path": ".github/workflows/windows-lite.yml",

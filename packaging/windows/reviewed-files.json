@@ -12,7 +12,7 @@
   {
     "path": ".github/workflows/macos-lite.yml",
     "bytes": 2022,
-    "sha256": "7c1fd0643ea5bcd62b70d2d734a66c76254d6df149d606e7d6d0b83ba437f977"
+    "sha256": "f38b413884a10bedbb6da56b13ccf69df926954d5659e62d8e819993a9372b59"
   },
   {
     "path": ".github/workflows/windows-lite.yml",
@@ -42,7 +42,7 @@
   {
     "path": "SOURCE_MANIFEST.json",
     "bytes": 25243,
-    "sha256": "a023ff874819997d5e8d2c2df80f0e2f8c51206e83c79bb36fcb937b11a0454b"
+    "sha256": "7234b3b43008bd38ce79080e5342fa54f014c6443701b386808faddcb315f2d8"
   },
   {
     "path": "THIRD_PARTY_NOTICES.md",

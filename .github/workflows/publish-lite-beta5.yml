@@ -1,0 +1,76 @@
+name: Publish Mac and Windows lite beta.5
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/publish-lite-beta5.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download tested Mac lite build
+        uses: actions/download-artifact@v4
+        with:
+          name: TrainingOnePager-macOS-arm64-lite-test
+          repository: huwx1995/training-one-pager
+          run-id: 42628771529
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: mac-input
+      - name: Download tested Windows lite build
+        uses: actions/download-artifact@v4
+        with:
+          name: TrainingOnePager-windows-x64-lite-test
+          repository: huwx1995/training-one-pager
+          run-id: 42626145755
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: windows-input
+      - name: Verify and prepare download files
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd mac-input && sha256sum -c SHA256SUMS.txt)
+          (cd windows-input && sha256sum -c SHA256SUMS.txt)
+          zip=windows-input/TrainingOnePager-0.1.0-beta.5-windows-x64-lite.zip
+          unzip -Z1 "$zip" | grep -Fx 'TrainingOnePagerLite/_internal/lite-edition.flag'
+          unzip -Z1 "$zip" | grep -Fx 'TrainingOnePagerLite/TrainingOnePager.exe'
+          if unzip -Z1 "$zip" | grep -E '/(models/|tools/(ffmpeg|ffprobe|whisper-cli))'; then
+            echo 'Unexpected audio resource in lite ZIP'
+            exit 1
+          fi
+          mkdir release-files
+          cp mac-input/TrainingOnePager-0.1.0-beta.5-macOS-arm64-lite.dmg release-files/
+          cp windows-input/TrainingOnePager-0.1.0-beta.5-windows-x64-lite.zip release-files/
+          cp mac-input/TrainingOnePager-0.1.0-beta.5-source.zip release-files/
+          (cd release-files && sha256sum TrainingOnePager-* > SHA256SUMS.txt)
+      - name: Publish prerelease
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if gh release view v0.1.0-beta.5 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo 'Release already exists; refusing to replace it.'
+            exit 1
+          fi
+          printf '%s\n' \
+            '轻量版只处理文档，不支持录音转写；仍支持文档解析、生成和导出。' \
+            '' \
+            'Apple 芯片 Mac（macOS 14 及以上）：下载 macOS-arm64-lite.dmg，安装“培训一纸通轻量版”。' \
+            'Windows 10/11 64 位 Intel/AMD：下载 windows-x64-lite.zip，完整解压 TrainingOnePagerLite 文件夹后双击 TrainingOnePager.exe。' \
+            '' \
+            '轻量版使用独立应用名称、目录和本机数据目录，可与完整版并存。' \
+            '需要录音功能：Mac 完整版 https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.3 ；Windows 完整版 https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.4 。' \
+            '' \
+            '两个安装包使用相同的程序源码并通过合成材料测试；源码包与校验值见附件。' \
+            'Mac 应用未经过 Apple Developer ID 签名与公证，首次打开请核对来源。' \
+            > release-notes.md
+          gh release create v0.1.0-beta.5 release-files/* \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title 'Mac 与 Windows 轻量版 v0.1.0-beta.5' \
+            --notes-file release-notes.md \
+            --prerelease
