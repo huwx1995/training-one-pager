@@ -316,8 +316,8 @@
   },
   {
     "path": "tests/test_audio_workflow.py",
-    "bytes": 13365,
-    "sha256": "051cb585306c1caff14fe8438b3e887c6563a07e7eac51ea48971ef08f4c2a01"
+    "bytes": 13401,
+    "sha256": "1592de47d1110b4b01cd676be0c5b696e7812b85ec3a4f54bcf636cabf321880"
   },
   {
     "path": "tests/test_bank_redaction_rules.py",

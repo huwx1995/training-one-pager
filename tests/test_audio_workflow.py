@@ -84,7 +84,7 @@ class AudioWorkflowTests(unittest.TestCase):
                 output = Path(command[command.index("-of") + 1]).with_suffix(".json")
                 output.write_text(json.dumps({"transcription": [
                     {"text": "这是模拟培训", "timestamps": {"from": "00:00:00,000", "to": "00:00:00,900"},
-                     "offsets": {"from": 0, "to": 900}}]}, ensure_ascii=False))
+                     "offsets": {"from": 0, "to": 900}}]}, ensure_ascii=False), encoding="utf-8")
                 return subprocess.CompletedProcess(command, 0)
             return real_run(command, **kwargs)
 
@@ -176,7 +176,7 @@ class AudioWorkflowTests(unittest.TestCase):
                 output.write_text(json.dumps({"transcription": [
                     {"text": "培训材料需要先核验", "offsets": {"from": 0, "to": 7750}},
                     {"text": "后续再办理登记", "offsets": {"from": 7750, "to": 12500}},
-                ]}, ensure_ascii=False))
+                ]}, ensure_ascii=False), encoding="utf-8")
                 return subprocess.CompletedProcess(command, 0)
             return real_run(command, **kwargs)
 
