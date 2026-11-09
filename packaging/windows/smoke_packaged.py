@@ -29,6 +29,17 @@ def main():
                        'SystemRoot':os.environ['SystemRoot'], 'WINDIR':os.environ['SystemRoot'],
                        'USERPROFILE':str(root),'LOCALAPPDATA':str(root/'local'), 'HOME':str(root),
                        'TEMP':str(root),'TMP':str(root),'ONEPAGER_DATA_DIR':str(data_dir)}
+        sample = app.parents[1] / 'upstream/whisper.cpp-1.7.6/samples/jfk.wav'
+        assert sample.is_file(), 'Public upstream speech sample is missing'
+        transcript_prefix = root / 'speech-check'
+        speech_started = time.monotonic()
+        speech = subprocess.run([str(app/'_internal/tools/whisper-cli-avx2.exe'), '-m', str(model),
+            '-f', str(sample), '-l', 'en', '-oj', '-of', str(transcript_prefix)],
+            env=environment, capture_output=True, timeout=180)
+        assert speech.returncode == 0, speech.stderr[-1000:]
+        recognized = json.loads(transcript_prefix.with_suffix('.json').read_text(encoding='utf-8'))
+        assert any(str(item.get('text', '')).strip() for item in recognized.get('transcription', []))
+        print(f'Windows bundled AVX2 speech transcription passed in {time.monotonic() - speech_started:.1f}s', flush=True)
         tls_result = root / 'tls.json'
         subprocess.run([str(executable), '--check-tls-local', '--result-file', str(tls_result)],
                        env=environment, check=True, timeout=30, creationflags=0x08000000)

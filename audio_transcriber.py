@@ -6,6 +6,8 @@ import os
 import re
 import shutil
 import subprocess
+import sys
+import ctypes
 from platform_runtime import run_tool
 import tempfile
 from pathlib import Path
@@ -61,9 +63,22 @@ def model_path(data_dir: Path) -> Path:
     return installed if installed.is_file() or not bundled.is_file() else bundled
 
 
+def _windows_avx2_available() -> bool:
+    if sys.platform != "win32":
+        return False
+    try:
+        kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel.IsProcessorFeaturePresent.argtypes = [ctypes.c_uint32]
+        kernel.IsProcessorFeaturePresent.restype = ctypes.c_int
+        return bool(kernel.IsProcessorFeaturePresent(40))
+    except (AttributeError, OSError):
+        return False
+
+
 def executable(name: str, override: str = "") -> str:
     value = os.getenv(override, "").strip() if override else ""
-    result = value or bundled_tool(name) or shutil.which(name)
+    accelerated = bundled_tool("whisper-cli-avx2") if name == "whisper-cli" and not value and _windows_avx2_available() else None
+    result = value or accelerated or bundled_tool(name) or shutil.which(name)
     if not result or not Path(result).is_file():
         raise RuntimeError(f"缺少本地工具 {name}，请先安装并重试。")
     return result

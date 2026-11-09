@@ -12,6 +12,17 @@ import server
 
 
 class AudioWorkflowTests(unittest.TestCase):
+    def test_whisper_selects_accelerated_binary_only_when_supported(self):
+        tools = {"whisper-cli": "/test/whisper-cli", "whisper-cli-avx2": "/test/whisper-cli-avx2"}
+        with patch.object(audio, "bundled_tool", side_effect=tools.get), \
+             patch.object(audio.Path, "is_file", return_value=True), \
+             patch.object(audio, "_windows_avx2_available", return_value=True):
+            self.assertEqual("/test/whisper-cli-avx2", audio.executable("whisper-cli"))
+        with patch.object(audio, "bundled_tool", side_effect=tools.get), \
+             patch.object(audio.Path, "is_file", return_value=True), \
+             patch.object(audio, "_windows_avx2_available", return_value=False):
+            self.assertEqual("/test/whisper-cli", audio.executable("whisper-cli"))
+
     def setUp(self):
         server.DOCUMENT_SESSIONS.clear()
         self.temp = tempfile.TemporaryDirectory()

@@ -14,6 +14,16 @@ if ($LASTEXITCODE -ne 0) { throw 'whisper configure failed' }
 & cmake --build $WhisperBuild --config Release --target whisper-cli --parallel 4
 if ($LASTEXITCODE -ne 0) { throw 'whisper build failed' }
 Copy-Item (Join-Path $WhisperBuild 'bin/Release/whisper-cli.exe') $Tools
+$WhisperFastBuild = Join-Path $BuildRoot 'whisper-build-avx2'
+& cmake -S $Whisper -B $WhisperFastBuild -A x64 `
+  -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DBUILD_SHARED_LIBS=OFF `
+  -DGGML_NATIVE=OFF -DGGML_AVX=ON -DGGML_AVX2=ON -DGGML_AVX512=OFF `
+  -DGGML_FMA=ON -DGGML_F16C=ON -DGGML_OPENMP=OFF -DGGML_LLAMAFILE=OFF `
+  -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_SERVER=OFF -DWHISPER_CURL=OFF
+if ($LASTEXITCODE -ne 0) { throw 'AVX2 whisper configure failed' }
+& cmake --build $WhisperFastBuild --config Release --target whisper-cli --parallel 4
+if ($LASTEXITCODE -ne 0) { throw 'AVX2 whisper build failed' }
+Copy-Item (Join-Path $WhisperFastBuild 'bin/Release/whisper-cli.exe') (Join-Path $Tools 'whisper-cli-avx2.exe')
 
 # A full commit fixes the registry and its source archive hashes.
 $VcpkgCommit = '6323816b53236bc9c8e10b1898456fb8e24725b9'

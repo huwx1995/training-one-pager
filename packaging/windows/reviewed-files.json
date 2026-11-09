@@ -31,8 +31,8 @@
   },
   {
     "path": "SOURCE_MANIFEST.json",
-    "bytes": 24139,
-    "sha256": "0d2a93a144c872b749c77e1baad5925eb6e9a07594b1498ecd7266e251d544dd"
+    "bytes": 24140,
+    "sha256": "44a5ddc79e1eb937b91835eb81bbf46125b5ae63d5d3436d79298110d5be53f1"
   },
   {
     "path": "THIRD_PARTY_NOTICES.md",
@@ -46,8 +46,8 @@
   },
   {
     "path": "audio_transcriber.py",
-    "bytes": 11693,
-    "sha256": "2beeab3e4e3d650e100b43c0017d6cb1b3200e68d173d5c15cbdd12b60d461fb"
+    "bytes": 12281,
+    "sha256": "f2018616add719cf33ffae3dcfccfce0a94fc605949a510c770ee96ebafea334"
   },
   {
     "path": "bank_redaction_rules.py",
@@ -176,13 +176,13 @@
   },
   {
     "path": "packaging/windows/build_native.ps1",
-    "bytes": 2866,
-    "sha256": "5bfd9e9095d595e7af17685943a42a286e66bb95aa6e22b7ade1df7866055f4a"
+    "bytes": 3591,
+    "sha256": "7bb7cff9cf87502fc3104f64ad247db46f7568b2ae85e19dfe10397bc4ea5091"
   },
   {
     "path": "packaging/windows/build_portable.py",
-    "bytes": 4574,
-    "sha256": "4b48c7fe2e65e6b121a9309914316f110b9f23b481178ed9124e8838497ca680"
+    "bytes": 4598,
+    "sha256": "b7122bafec07f2ab0326d4770e131b61081e21ca160c7ce316d3e918c041daf0"
   },
   {
     "path": "packaging/windows/desktop.py",
@@ -211,8 +211,8 @@
   },
   {
     "path": "packaging/windows/smoke_packaged.py",
-    "bytes": 9394,
-    "sha256": "022082e64080ee838fe0a7d65143cc1a386b959a5cbfbe4f473d50545c432b80"
+    "bytes": 10272,
+    "sha256": "52ce02bf35a8d663e46c900809ce4860b395f0cf0a4f8f4c1b29a121855f8d73"
   },
   {
     "path": "packaging/windows/source_snapshot.py",
@@ -321,8 +321,8 @@
   },
   {
     "path": "tests/test_audio_workflow.py",
-    "bytes": 13401,
-    "sha256": "1592de47d1110b4b01cd676be0c5b696e7812b85ec3a4f54bcf636cabf321880"
+    "bytes": 14200,
+    "sha256": "3d1edc76fd94cb0c81c2ed3417937cc5ee747fccd3c699ea0c12421c0b422b88"
   },
   {
     "path": "tests/test_bank_redaction_rules.py",

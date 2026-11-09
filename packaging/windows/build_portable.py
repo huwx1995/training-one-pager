@@ -36,7 +36,7 @@ def main() -> None:
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     tools = build / "tools"
-    for name in ("ffmpeg.exe", "ffprobe.exe", "whisper-cli.exe", "tesseract.exe"):
+    for name in ("ffmpeg.exe", "ffprobe.exe", "whisper-cli.exe", "whisper-cli-avx2.exe", "tesseract.exe"):
         if not (tools / name).is_file():
             raise ValueError(f"Missing Windows tool: {name}")
     for name in ("chi_sim.traineddata", "eng.traineddata"):
