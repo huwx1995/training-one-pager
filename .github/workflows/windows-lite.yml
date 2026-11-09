@@ -1,0 +1,75 @@
+name: Build Windows lite ZIP
+on:
+  push:
+    branches:
+      - codex/lightweight-editions
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: windows-2022
+    timeout-minutes: 240
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONIOENCODING: utf-8
+      VCPKG_DISABLE_METRICS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: x64
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify reviewed source snapshot
+        run: python packaging/windows/source_snapshot.py
+      - name: Install build and test dependencies
+        run: python -m pip install -r packaging/windows/requirements-build.txt
+      - name: JavaScript syntax
+        shell: bash
+        run: |
+          set -e
+          for file in prototype/*.js; do node --check "$file"; done
+      - name: Fetch fixed audio source archives
+        run: python packaging/macos/fetch_sources.py .windows-build/upstream
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            make
+            diffutils
+            nasm
+            mingw-w64-ucrt-x86_64-gcc
+      - name: Build minimal LGPL audio helpers
+        shell: msys2 {0}
+        run: bash packaging/windows/build_ffmpeg.sh .windows-build
+      - name: Add audio helpers to PATH
+        shell: pwsh
+        run: Add-Content -Path $env:GITHUB_PATH -Value (Resolve-Path .windows-build/tools).Path
+      - name: Python regression tests
+        run: python -m unittest discover -s tests -q
+      - name: Fetch fixed public sources and speech model
+        run: python packaging/windows/prepare_inputs.py .windows-build
+      - name: Build Windows speech and OCR helpers
+        shell: pwsh
+        run: ./packaging/windows/build_native.ps1 -BuildRoot .windows-build
+      - name: Build complete base application
+        run: python packaging/windows/build_portable.py .windows-build dist-full-temporary
+      - name: Check complete edition still works
+        run: python packaging/windows/smoke_packaged.py .windows-build/frozen/TrainingOnePager/onepager-backend.exe
+      - name: Build document-only ZIP
+        run: python packaging/windows/build_lite.py .windows-build/frozen/TrainingOnePager dist-lite-windows
+      - name: Check document-only edition
+        run: python packaging/windows/smoke_lite.py dist-lite-windows/lite-stage/TrainingOnePagerLite/onepager-backend.exe
+      - name: Upload lite ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrainingOnePager-windows-x64-lite-test
+          path: |
+            dist-lite-windows/TrainingOnePager-0.1.0-beta.5-windows-x64-lite.zip
+            dist-lite-windows/TrainingOnePager-0.1.0-beta.5-source.zip
+            dist-lite-windows/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 14

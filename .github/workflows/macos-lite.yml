@@ -1,0 +1,52 @@
+name: Build Apple Silicon Mac lite DMG
+on:
+  push:
+    branches:
+      - codex/lightweight-editions
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: macos-15
+    timeout-minutes: 120
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: arm64
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify Apple Silicon builder
+        run: test "$(uname -m)" = arm64
+      - name: Verify reviewed source snapshot
+        run: python packaging/windows/source_snapshot.py
+      - name: Install build and test dependencies
+        run: python -m pip install -r requirements-packaging.txt -r requirements-dev.txt
+      - name: Python regression tests
+        run: python -m unittest discover -s tests -q
+      - name: JavaScript syntax
+        run: |
+          for file in prototype/*.js; do node --check "$file" || exit 1; done
+      - name: Build Apple Silicon base application
+        run: |
+          mkdir -p .mac-lite-build/tools
+          python packaging/macos/build_app.py .mac-lite-build .mac-lite-build/base-app
+      - name: Assemble document-only DMG
+        run: python packaging/macos/assemble_lite.py .mac-lite-build/base-app/培训一纸通.app dist-lite-mac
+      - name: Check document-only edition
+        run: python packaging/macos/smoke_lite.py dist-lite-mac/lite-stage/培训一纸通轻量版.app
+      - name: Upload lite DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrainingOnePager-macOS-arm64-lite-test
+          path: |
+            dist-lite-mac/TrainingOnePager-0.1.0-beta.5-macOS-arm64-lite.dmg
+            dist-lite-mac/TrainingOnePager-0.1.0-beta.5-source.zip
+            dist-lite-mac/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 14

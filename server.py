@@ -45,12 +45,13 @@ from docx_export import (
     mosaicked_asset_bytes as export_mosaicked_asset_bytes,
 )
 import audio_transcriber as audio
-from app_paths import resource_dir, user_data_dir
+from app_paths import lite_edition, resource_dir, user_data_dir
 from platform_runtime import process_alive as _process_alive
 
 
 ROOT = resource_dir()
 PROTOTYPE = ROOT / "prototype"
+AUDIO_ENABLED = not lite_edition()
 DATA_DIR = user_data_dir()
 RUNS_DIR = DATA_DIR / "runs"
 RUNS_DIR.mkdir(parents=True, exist_ok=True)
@@ -2986,6 +2987,9 @@ class Handler(BaseHTTPRequestHandler):
         if not _local_request_allowed(self, False):
             return
         path = self.path.split("?", 1)[0]
+        if not AUDIO_ENABLED and path.startswith("/api/audio/"):
+            error_response(self, 404, "轻量版不提供录音转写，请使用完整版。")
+            return
         if path.startswith("/api/generation-status/"):
             job_id = path.rsplit("/", 1)[-1]
             job = GENERATION_JOBS.get(job_id) if re.fullmatch(r"[0-9a-f]{32}", job_id) else None
@@ -3079,6 +3083,8 @@ class Handler(BaseHTTPRequestHandler):
         elif target.suffix == ".js":
             content_type = "application/javascript; charset=utf-8"
         body = target.read_bytes()
+        if path == "/index.html" and not AUDIO_ENABLED:
+            body = body.replace(b"<body>", b'<body data-edition="lite">', 1)
         self.send_response(200)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))
@@ -3088,6 +3094,9 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         self.request_id = uuid.uuid4().hex[:12]
         if not _local_request_allowed(self, True):
+            return
+        if not AUDIO_ENABLED and self.path.startswith("/api/audio/"):
+            error_response(self, 404, "轻量版不提供录音转写，请使用完整版。")
             return
         try:
             request_size = int(self.headers.get("Content-Length", "0"))

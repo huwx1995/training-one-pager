@@ -6,6 +6,8 @@
 
 构建流程：校验审查清单 → 安装 Python 依赖 → 运行回归测试 → 下载并校验固定上游源码、语音模型和 OCR 数据 → 编译 Windows FFmpeg、whisper.cpp 和 Tesseract → PyInstaller 冻结程序 → 把模型及项目源码放入完整包 → 用合成材料检查启动、解析、导出、音频工具、OCR、TLS 和退出 → 上传 ZIP、源码包和 SHA256 校验值。
 
+轻量版从同一次冻结构建复制到独立的 `TrainingOnePagerLite` 文件夹，移除模型、FFmpeg 和 Whisper，加入 `lite-edition.flag`。后端据此拒绝录音接口，页面隐藏录音入口；Tesseract 和文档功能保留。构建脚本为 `build_lite.py`，合成材料检查为 `smoke_lite.py`。现有完整版 ZIP 不重新命名或替换。
+
 源码审查清单位于 `reviewed-files.json`，列表中的字节摘要必须与构建源码一致。`.gitattributes` 保持跨系统换行字节一致。不要为了让构建通过而跳过清单检查。构建日志或测试文件不包含真实用户材料和 API Key。
 
 Windows EXE 尚未签名，下载后的系统安全提示需要用户核实来源；不能要求关闭全局安全保护。应用只监听本机回环地址。压缩包应整体解压，不能只复制 EXE。首次测试请使用虚构材料。

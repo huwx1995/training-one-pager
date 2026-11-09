@@ -105,13 +105,13 @@ def serve(ready_file):
         ready.unlink(missing_ok=True)
 
 
-def claim_desktop_instance():
+def claim_desktop_instance(lite=False):
     global _MUTEX_HANDLE
     kernel = ctypes.WinDLL('kernel32', use_last_error=True)
     kernel.CreateMutexW.argtypes = [ctypes.c_void_p, wintypes.BOOL, wintypes.LPCWSTR]
     kernel.CreateMutexW.restype = wintypes.HANDLE
     ctypes.set_last_error(0)
-    _MUTEX_HANDLE = kernel.CreateMutexW(None, False, 'TrainingOnePagerDesktop')
+    _MUTEX_HANDLE = kernel.CreateMutexW(None, False, 'TrainingOnePagerLiteDesktop' if lite else 'TrainingOnePagerDesktop')
     if not _MUTEX_HANDLE:
         raise ctypes.WinError(ctypes.get_last_error())
     return ctypes.get_last_error() != 183
@@ -120,17 +120,19 @@ def claim_desktop_instance():
 def launch():
     import tkinter as tk
     from tkinter import messagebox
-    from app_paths import user_data_dir, resource_dir
+    from app_paths import lite_edition, user_data_dir, resource_dir
+    lite = lite_edition()
+    title = '培训一纸通轻量版' if lite else '培训一纸通'
     root = tk.Tk()
-    root.title('培训一纸通')
+    root.title(title)
     root.geometry('490x260')
     root.resizable(False, False)
-    if not claim_desktop_instance():
-        messagebox.showinfo('软件已打开', '培训一纸通已经在运行，请使用已有控制窗口打开工作台。')
+    if not claim_desktop_instance(lite):
+        messagebox.showinfo('软件已打开', f'{title}已经在运行，请使用已有控制窗口打开工作台。')
         root.destroy()
         return
     status = tk.StringVar(value='正在启动，请稍候……')
-    tk.Label(root, text='培训一纸通', font=('Microsoft YaHei', 20)).pack(pady=(24, 10))
+    tk.Label(root, text=title, font=('Microsoft YaHei', 20)).pack(pady=(24, 10))
     tk.Label(root, textvariable=status, wraplength=440).pack(pady=8)
     data = user_data_dir()
     data.mkdir(parents=True, exist_ok=True)

@@ -39,6 +39,15 @@ class AppPathTests(unittest.TestCase):
              patch.object(app_paths.sys, 'platform', 'darwin'), patch.object(app_paths.Path, 'home', return_value=Path('/synthetic-user')):
             self.assertEqual(Path('/synthetic-user/Library/Application Support/TrainingOnePager'), app_paths.user_data_dir())
 
+    def test_lite_edition_uses_separate_data_folder(self):
+        with tempfile.TemporaryDirectory() as temporary, patch.dict('os.environ', {}, clear=True), \
+             patch.object(app_paths.sys, 'frozen', True, create=True), \
+             patch.object(app_paths.sys, 'platform', 'darwin'), \
+             patch.object(app_paths.Path, 'home', return_value=Path('/synthetic-user')), \
+             patch.object(app_paths, 'resource_dir', return_value=Path(temporary)):
+            (Path(temporary) / 'lite-edition.flag').touch()
+            self.assertEqual(Path('/synthetic-user/Library/Application Support/TrainingOnePagerLite'), app_paths.user_data_dir())
+
     def test_configured_data_dir_is_resolved(self):
         with tempfile.TemporaryDirectory() as temporary, patch.dict('os.environ', {'ONEPAGER_DATA_DIR': temporary}):
             self.assertEqual(Path(temporary).resolve(), app_paths.user_data_dir())

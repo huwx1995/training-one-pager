@@ -52,3 +52,7 @@ python3 -m venv .build-venv
 完整版在只读应用资源中包含语音模型，用户无需另装模型。
 
 组装：`python packaging/macos/assemble_release.py BUILD OUTPUT MANIFEST MODEL_FILE`。产物包含一个完整版 DMG，以及项目源码和配套上游源码。模型来源及许可见 speech-model.json 和 third_party/licenses/Whisper-LICENSE。
+
+## 轻量版安装
+
+轻量版从单独构建的基础应用组装：`python packaging/macos/assemble_lite.py BASE_APP OUTPUT`。它只保留文档解析需要的 Vision OCR，去掉 FFmpeg、Whisper 和语音模型，并在包内放置 `lite-edition.flag`。后端禁止录音接口，界面不提供录音入口。应用名、Bundle ID 和本机数据目录与完整版不同，可同时保留；它不覆盖现有完整版 DMG。

@@ -81,6 +81,13 @@ const reasoningChoices = {
 };
 
 const fileInput = document.querySelector("#fileInput");
+const audioEnabled = document.body.dataset.edition !== "lite";
+const defaultFileMeta = audioEnabled ? "文档最大 1024MB；录音最大 200MB、120分钟" : "文档最大 1024MB";
+if (!audioEnabled) {
+  fileInput.accept = ".ppt,.pptx,.doc,.docx,.pdf,.txt,.xls,.xlsx";
+  document.querySelector(".file-drop span").textContent = "支持 PPT、Word、PDF、TXT 和 Excel；Excel 提取单元格内容";
+  document.querySelector("#fileMeta").textContent = defaultFileMeta;
+}
 const audioModelRow = document.querySelector("#audioModelRow");
 const audioTermsRow = document.querySelector("#audioTermsRow");
 const audioTermsInput = document.querySelector("#audioTermsInput");
@@ -1222,6 +1229,10 @@ async function extractFile(includeAllImages = false) {
     extractStatus.textContent = "请先选择文件。";
     return;
   }
+  if (!audioEnabled && isAudioFile(file)) {
+    extractStatus.textContent = "轻量版不提供录音转写，请上传文档或使用完整版。";
+    return;
+  }
 
   const formData = new FormData();
   formData.append("file", file);
@@ -1366,6 +1377,7 @@ function initializeDocument(documentResult, includeAllImages = false) {
 function isAudioFile(file) { return /\.(mp3|m4a|wav|flac|aac|ogg|opus|webm|mp4)$/i.test(file?.name || ""); }
 
 async function refreshAudioModel() {
+  if (!audioEnabled) return;
   audioModelRow.hidden = !isAudioFile(fileInput.files?.[0]);
   audioTermsRow.hidden = audioModelRow.hidden;
   if (audioModelRow.hidden) return;
@@ -1674,7 +1686,7 @@ async function clearAll() {
   qaPanel.hidden = true;
   qaInclude.hidden = true;
   questionInput.value = "";
-  fileMeta.textContent = "文档最大 1024MB；录音最大 200MB、120分钟";
+  fileMeta.textContent = defaultFileMeta;
   audioModelRow.hidden = true;
   audioTermsRow.hidden = true;
   audioTermsInput.value = "";

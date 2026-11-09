@@ -4,7 +4,14 @@
 
 把培训文档或录音整理成一页摘要，逐条保留原文出处，支持人工核对、编辑和导出。
 
-**当前状态：内测版本，采用 AGPL v3（AGPL-3.0-only）。** [GitHub 仓库](https://github.com/huwx1995/training-one-pager)提供源码。[Mac 完整版 v0.1.0-beta.3](https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.3)和 [Windows 完整版 v0.1.0-beta.4](https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.4)均内置语音模型，请按电脑系统下载。
+**当前状态：内测版本，采用 AGPL v3（AGPL-3.0-only）。** [GitHub 仓库](https://github.com/huwx1995/training-one-pager)提供源码。请选择适合电脑和用途的版本：
+
+| 电脑 | 完整版（含录音转写） | 轻量版（仅文档） |
+| --- | --- | --- |
+| Apple 芯片 Mac，macOS 14+ | [v0.1.0-beta.3 下载](https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.3) | [v0.1.0-beta.5 下载](https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.5) |
+| Windows 10/11 64 位 Intel/AMD | [v0.1.0-beta.4 下载](https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.4) | [v0.1.0-beta.5 下载](https://github.com/huwx1995/training-one-pager/releases/tag/v0.1.0-beta.5) |
+
+轻量版不包含语音模型和录音工具，不能上传录音；文档解析、生成和导出仍可使用。轻量版与完整版使用不同的程序名称及本机数据目录，可以并存。
 
 ## 能做什么
 
@@ -17,7 +24,7 @@
 
 ## Mac 内测安装
 
-从上方 Mac 版本页面下载 `macOS-arm64-full.dmg` 完整版安装包，将“培训一纸通”拖入“应用程序”，再双击打开。工作台会自动在默认浏览器中打开，结束后请在应用控制窗口点击“退出”。
+从上方对应页面下载 Mac 完整版或轻量版 DMG，将应用拖入“应用程序”，再双击打开。工作台会自动在默认浏览器中打开，结束后请在应用控制窗口点击“退出”。
 
 安装包自带 Python、音频工具、本地 OCR 和语音模型。旧 DOC/PPT 仍需 LibreOffice 或先另存为新格式。目标 macOS 14 及以上，当前仅在开发 Mac 验证；未做 Developer ID 签名及公证，首次打开可能被系统拦截。核实文件来源后按系统“隐私与安全性”提示处理，不要关闭全局安全保护。
 
@@ -25,7 +32,7 @@
 
 ## Windows 内测安装
 
-从上方 Windows 版本页面下载 `windows-x64-full.zip` 完整版。解压整个压缩包，打开 `TrainingOnePager` 文件夹，双击 `TrainingOnePager.exe`；请保留同目录下的 `_internal` 和 `sources` 文件夹。Windows 版已在普通 Windows 电脑上完成试用；构建和自动检查见 [Windows 构建说明](packaging/windows/README.md)。
+从上方对应页面下载 Windows 完整版或轻量版 ZIP。解压整个压缩包，打开其中的 `TrainingOnePager` 或 `TrainingOnePagerLite` 文件夹，双击 `TrainingOnePager.exe`；请保留同目录下的 `_internal` 和 `sources` 文件夹。完整版已在普通 Windows 电脑上完成试用；构建和自动检查见 [Windows 构建说明](packaging/windows/README.md)。
 
 ## 从源码启动
 

@@ -52,7 +52,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
     var dataDirectory: URL {
         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("TrainingOnePager", isDirectory: true)
+            .appendingPathComponent(Bundle.main.bundleIdentifier == "org.trainingonepager.desktop.lite" ? "TrainingOnePagerLite" : "TrainingOnePager", isDirectory: true)
     }
     func startBackend() {
         do {
