@@ -1,13 +1,23 @@
 [
   {
+    "path": ".gitattributes",
+    "bytes": 85,
+    "sha256": "2850c4ea6c31daf3c76d3df4d6059fa1efbd125ea6951f63162e139022ca8473"
+  },
+  {
     "path": ".github/workflows/check.yml",
     "bytes": 481,
     "sha256": "e3d666cb06f24ab1019c19b0c0ee3dae36bd4a097502900646ed04b585538a89"
   },
   {
+    "path": ".github/workflows/windows-portable.yml",
+    "bytes": 2467,
+    "sha256": "f2b9ec40d532bd1c9204cd175643bc6a94cfcbb589aad05cdea9159a581d1f7e"
+  },
+  {
     "path": ".gitignore",
-    "bytes": 547,
-    "sha256": "fd0c72f8dc179770825f88087d4198704ae4f3771c44521980b63b3d6b8f0289"
+    "bytes": 577,
+    "sha256": "a9c22d4c8b15a2548bf0f0649a1d08632983a780e9d1209e6bd3d233b3859a22"
   },
   {
     "path": "LICENSE",
@@ -16,8 +26,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 5561,
-    "sha256": "7f51b3b2d15cfca2ad2169278ee72786be335c0f3857261eb2140b1f377a8312"
+    "bytes": 5980,
+    "sha256": "1165913dec8ac0ce6724687db1e68dd1ffc121f1ce2429089a08e21eb06233d8"
   },
   {
     "path": "THIRD_PARTY_NOTICES.md",
@@ -26,13 +36,13 @@
   },
   {
     "path": "app_paths.py",
-    "bytes": 966,
-    "sha256": "7e5bfd58190cdeaed41852d5d40cf53899fecace5bd53003145e8126a53ecdc7"
+    "bytes": 1070,
+    "sha256": "76808f4406294b61355b1b0dcbb4b21c836d00c6d202717395f08d9899b3aec8"
   },
   {
     "path": "audio_transcriber.py",
-    "bytes": 11673,
-    "sha256": "4cce8dd95ff32fd02ba2590a7467ee76a97979893e5b350d00349ea76fb34a5f"
+    "bytes": 12685,
+    "sha256": "68e930f562b12f86b0ae002a4a166bd66d644ad9b0749be62afbf8edd373931f"
   },
   {
     "path": "bank_redaction_rules.py",
@@ -56,8 +66,8 @@
   },
   {
     "path": "document_parser.py",
-    "bytes": 61962,
-    "sha256": "0f4adc301aad4f11bf1a923cac9e6107a8332c8db4342acc14eade53ebdeceee"
+    "bytes": 62496,
+    "sha256": "0f82980b292ce5fd671dfa2c7797f6f1796736f45da23d1148359de041abeeac"
   },
   {
     "path": "docx_export.py",
@@ -150,6 +160,71 @@
     "sha256": "44eafdcff641a974610462f31593d788c7b9447aa724d76fee00fb232e56a55f"
   },
   {
+    "path": "packaging/windows/README.md",
+    "bytes": 2056,
+    "sha256": "f59d080507f795e386175ca52290630b6f89694771fed5774eff21c496b3c985"
+  },
+  {
+    "path": "packaging/windows/build_ffmpeg.sh",
+    "bytes": 1597,
+    "sha256": "f824a7220419183b13590b92cf57e24f7980cdf88c3235af9945ba0300789b38"
+  },
+  {
+    "path": "packaging/windows/build_native.ps1",
+    "bytes": 3838,
+    "sha256": "97b07e4c5e3b8686326dbbeea59e291dbb597c402730319b0099a1c76550b4f8"
+  },
+  {
+    "path": "packaging/windows/build_portable.py",
+    "bytes": 4598,
+    "sha256": "b7122bafec07f2ab0326d4770e131b61081e21ca160c7ce316d3e918c041daf0"
+  },
+  {
+    "path": "packaging/windows/desktop.py",
+    "bytes": 9754,
+    "sha256": "1697ae901e38d710a3514743bf7bba23d3c95563621fa9c96bf5aa18b0c58ddc"
+  },
+  {
+    "path": "packaging/windows/ocr-downloads.json",
+    "bytes": 757,
+    "sha256": "8b6767fed5c927714da93bd862021a9e976f6eccb5d6df127a67dc1efe84014a"
+  },
+  {
+    "path": "packaging/windows/onepager.spec",
+    "bytes": 1522,
+    "sha256": "e33b26c543dab9e9a9e6cea09aaec92503288b005ff7965e1efdd474fc652693"
+  },
+  {
+    "path": "packaging/windows/prepare_inputs.py",
+    "bytes": 2889,
+    "sha256": "7bd57eac8efda7048081982013574825a91a58ef3d3391e114b328ed28c2a4ca"
+  },
+  {
+    "path": "packaging/windows/requirements-build.txt",
+    "bytes": 151,
+    "sha256": "b3c0b0bc920e0e2c9425e1ae729db56ae4f355c09377cc225550cb5a5250651b"
+  },
+  {
+    "path": "packaging/windows/smoke_packaged.py",
+    "bytes": 12530,
+    "sha256": "ad2fc6d154ea3495e7e28afba1975ea74d7d3f9684ca404b968e936dabe32cfe"
+  },
+  {
+    "path": "packaging/windows/source_snapshot.py",
+    "bytes": 1705,
+    "sha256": "8fbef68ab76e25b8c103bb536b5c55baab4542ec49ef5c097d91032af9f76ac7"
+  },
+  {
+    "path": "packaging/windows/whisper-utf8.manifest",
+    "bytes": 415,
+    "sha256": "9096f05493737f10dadfe77fde5f3a2b997f23716410f8a5ad7c8d50d832692a"
+  },
+  {
+    "path": "platform_runtime.py",
+    "bytes": 1850,
+    "sha256": "e131e64bb0dbbc6f9463b85ff7791d6a72d5436c300962e712b670d0c9e802ca"
+  },
+  {
     "path": "prototype/app.js",
     "bytes": 133030,
     "sha256": "549de1eff3dcd5c12b6f1f1cb7034940850243bd8ae66716a807f93cbb53f02b"
@@ -226,8 +301,8 @@
   },
   {
     "path": "server.py",
-    "bytes": 215689,
-    "sha256": "9c4a8e08d90e5c9443b838f34421586fe401f52eafd545f46cf08fbc5d826e0a"
+    "bytes": 215558,
+    "sha256": "b38bfc0421e684d66a9691dcf3b208e0c86a80b8f772cdaf3d19511953a43aa2"
   },
   {
     "path": "session_store.py",
@@ -246,8 +321,8 @@
   },
   {
     "path": "tests/test_audio_workflow.py",
-    "bytes": 13365,
-    "sha256": "051cb585306c1caff14fe8438b3e887c6563a07e7eac51ea48971ef08f4c2a01"
+    "bytes": 14858,
+    "sha256": "42561b9fec7cd8135d9a2c6934014c5694d9f1c96d0b793be3a798e0b525b85b"
   },
   {
     "path": "tests/test_bank_redaction_rules.py",
@@ -263,6 +338,11 @@
     "path": "tests/test_one_pager.py",
     "bytes": 69796,
     "sha256": "92c75dda74711b40ff730607c7c2f2434f49590b2f1bae7bbe6f603ecedf9298"
+  },
+  {
+    "path": "tests/test_platform_runtime.py",
+    "bytes": 3618,
+    "sha256": "807ce0420b28d07b5361a34b169c213025b1896fad2877834955e3f6fea27b39"
   },
   {
     "path": "tests/test_redaction.py",

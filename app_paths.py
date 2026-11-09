@@ -22,5 +22,6 @@ def user_data_dir() -> Path:
 
 
 def bundled_tool(name: str) -> str | None:
-    candidate = resource_dir() / 'tools' / name
+    suffix = '.exe' if sys.platform == 'win32' and not name.lower().endswith('.exe') else ''
+    candidate = resource_dir() / 'tools' / (name + suffix)
     return str(candidate) if candidate.is_file() else None

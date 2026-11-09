@@ -12,6 +12,25 @@ import server
 
 
 class AudioWorkflowTests(unittest.TestCase):
+    def test_windows_whisper_threads_scale_with_cpu_and_stay_bounded(self):
+        with patch.object(audio.sys, 'platform', 'win32'):
+            for logical, expected in [(2, 2), (4, 4), (8, 6), (12, 8), (24, 8)]:
+                with patch.object(audio.os, 'cpu_count', return_value=logical):
+                    self.assertEqual(expected, audio.whisper_threads())
+        with patch.object(audio.sys, 'platform', 'darwin'):
+            self.assertIsNone(audio.whisper_threads())
+
+    def test_whisper_selects_accelerated_binary_only_when_supported(self):
+        tools = {"whisper-cli": "/test/whisper-cli", "whisper-cli-avx2": "/test/whisper-cli-avx2"}
+        with patch.object(audio, "bundled_tool", side_effect=tools.get), \
+             patch.object(audio.Path, "is_file", return_value=True), \
+             patch.object(audio, "_windows_avx2_available", return_value=True):
+            self.assertEqual("/test/whisper-cli-avx2", audio.executable("whisper-cli"))
+        with patch.object(audio, "bundled_tool", side_effect=tools.get), \
+             patch.object(audio.Path, "is_file", return_value=True), \
+             patch.object(audio, "_windows_avx2_available", return_value=False):
+            self.assertEqual("/test/whisper-cli", audio.executable("whisper-cli"))
+
     def setUp(self):
         server.DOCUMENT_SESSIONS.clear()
         self.temp = tempfile.TemporaryDirectory()
@@ -84,7 +103,7 @@ class AudioWorkflowTests(unittest.TestCase):
                 output = Path(command[command.index("-of") + 1]).with_suffix(".json")
                 output.write_text(json.dumps({"transcription": [
                     {"text": "这是模拟培训", "timestamps": {"from": "00:00:00,000", "to": "00:00:00,900"},
-                     "offsets": {"from": 0, "to": 900}}]}, ensure_ascii=False))
+                     "offsets": {"from": 0, "to": 900}}]}, ensure_ascii=False), encoding="utf-8")
                 return subprocess.CompletedProcess(command, 0)
             return real_run(command, **kwargs)
 
@@ -92,8 +111,11 @@ class AudioWorkflowTests(unittest.TestCase):
         def executable(name, override=""):
             return "fake-whisper" if name == "whisper-cli" else original_executable(name, override)
 
-        with patch.object(audio, "executable", side_effect=executable), patch.object(audio.subprocess, "run", side_effect=run):
+        with patch.object(audio, "executable", side_effect=executable), \
+             patch.object(audio, "whisper_threads", return_value=8), \
+             patch.object(audio.subprocess, "run", side_effect=run):
             result = audio.transcribe(self.sound, 1, model, terms=["水彩画", "素描画"])
+        self.assertEqual("8", whisper_commands[0][whisper_commands[0].index("-t") + 1])
         self.assertEqual("水彩画，素描画", whisper_commands[0][whisper_commands[0].index("--prompt") + 1])
         self.assertEqual([{"text": "这是模拟培训。", "start_ms": 0, "end_ms": 900,
                            "fragments": [{"text": "这是模拟培训", "start_ms": 0, "end_ms": 900}]}], result)
@@ -176,7 +198,7 @@ class AudioWorkflowTests(unittest.TestCase):
                 output.write_text(json.dumps({"transcription": [
                     {"text": "培训材料需要先核验", "offsets": {"from": 0, "to": 7750}},
                     {"text": "后续再办理登记", "offsets": {"from": 7750, "to": 12500}},
-                ]}, ensure_ascii=False))
+                ]}, ensure_ascii=False), encoding="utf-8")
                 return subprocess.CompletedProcess(command, 0)
             return real_run(command, **kwargs)
 

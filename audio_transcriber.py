@@ -6,6 +6,9 @@ import os
 import re
 import shutil
 import subprocess
+import sys
+import ctypes
+from platform_runtime import run_tool
 import tempfile
 from pathlib import Path
 from app_paths import bundled_tool, resource_dir
@@ -60,18 +63,39 @@ def model_path(data_dir: Path) -> Path:
     return installed if installed.is_file() or not bundled.is_file() else bundled
 
 
+def _windows_avx2_available() -> bool:
+    if sys.platform != "win32":
+        return False
+    try:
+        kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel.IsProcessorFeaturePresent.argtypes = [ctypes.c_uint32]
+        kernel.IsProcessorFeaturePresent.restype = ctypes.c_int
+        return bool(kernel.IsProcessorFeaturePresent(40))
+    except (AttributeError, OSError):
+        return False
+
+
 def executable(name: str, override: str = "") -> str:
     value = os.getenv(override, "").strip() if override else ""
-    result = value or bundled_tool(name) or shutil.which(name)
+    accelerated = bundled_tool("whisper-cli-avx2") if name == "whisper-cli" and not value and _windows_avx2_available() else None
+    result = value or accelerated or bundled_tool(name) or shutil.which(name)
     if not result or not Path(result).is_file():
         raise RuntimeError(f"缺少本地工具 {name}，请先安装并重试。")
     return result
 
 
+def whisper_threads() -> int | None:
+    """Use more of a Windows CPU without occupying every logical processor."""
+    if sys.platform != "win32":
+        return None
+    logical = os.cpu_count() or 4
+    return min(8, logical, max(4, (logical * 2 + 2) // 3))
+
+
 def probe(path: Path) -> float:
     command = [executable("ffprobe"), "-v", "error", "-show_streams", "-show_format", "-of", "json", str(path)]
     try:
-        result = subprocess.run(command, capture_output=True, text=True, check=True, timeout=30)
+        result = run_tool(command, capture_output=True, text=True, check=True, timeout=30)
         data = json.loads(result.stdout)
         if not any(item.get("codec_type") == "audio" for item in data.get("streams", [])):
             raise ValueError("文件中没有音频轨。")
@@ -213,7 +237,7 @@ def transcribe(path: Path, duration: float, model: Path, progress=None, cancelle
             if progress:
                 progress(number, count)
             try:
-                converted = subprocess.run([ffmpeg, "-hide_banner", "-nostats", "-nostdin", "-v", "info",
+                converted = run_tool([ffmpeg, "-hide_banner", "-nostats", "-nostdin", "-v", "info",
                                             "-ss", str(start), "-i", str(path), "-t", str(length),
                                             "-af", "asetpts=PTS-STARTPTS,silencedetect=noise=-38dB:d=0.45",
                                             "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", str(wav)],
@@ -221,9 +245,12 @@ def transcribe(path: Path, duration: float, model: Path, progress=None, cancelle
                 silences.extend(detected_silences(converted.stderr.decode("utf-8", errors="replace"),
                                                   start * 1000, round(length * 1000)))
                 command = [whisper, "-m", str(model), "-f", str(wav), "-l", "zh", "-oj", "-of", str(output)]
+                threads = whisper_threads()
+                if threads is not None:
+                    command.extend(["-t", str(threads)])
                 if terms:
                     command.extend(["--prompt", "，".join(terms)])
-                subprocess.run(command,
+                run_tool(command,
                                capture_output=True, check=True, timeout=max(240, int(length * 8)))
                 raw = json.loads(output.with_suffix(".json").read_text(encoding="utf-8"))
             except (OSError, subprocess.SubprocessError, ValueError, json.JSONDecodeError) as exc:
