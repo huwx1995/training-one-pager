@@ -11,8 +11,8 @@
   },
   {
     "path": ".github/workflows/windows-portable.yml",
-    "bytes": 2437,
-    "sha256": "ff70ae4b32b81f71fa769e7fcf290f6093a3f4e184242cc7fd0f3112833c4381"
+    "bytes": 2467,
+    "sha256": "f2b9ec40d532bd1c9204cd175643bc6a94cfcbb589aad05cdea9159a581d1f7e"
   },
   {
     "path": ".gitignore",

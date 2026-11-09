@@ -11,8 +11,8 @@
   },
   {
     "path": ".github/workflows/windows-portable.yml",
-    "bytes": 2437,
-    "sha256": "ff70ae4b32b81f71fa769e7fcf290f6093a3f4e184242cc7fd0f3112833c4381"
+    "bytes": 2467,
+    "sha256": "f2b9ec40d532bd1c9204cd175643bc6a94cfcbb589aad05cdea9159a581d1f7e"
   },
   {
     "path": ".gitignore",
@@ -32,7 +32,7 @@
   {
     "path": "SOURCE_MANIFEST.json",
     "bytes": 24139,
-    "sha256": "6fb10a9d3bec4e8dcd2a2a100b8bd7f3e74fc9ddc232de44da1aa1a50a9923de"
+    "sha256": "0d2a93a144c872b749c77e1baad5925eb6e9a07594b1498ecd7266e251d544dd"
   },
   {
     "path": "THIRD_PARTY_NOTICES.md",

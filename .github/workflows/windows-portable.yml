@@ -12,6 +12,7 @@ jobs:
     timeout-minutes: 240
     env:
       PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONIOENCODING: utf-8
       VCPKG_DISABLE_METRICS: '1'
     steps:
       - uses: actions/checkout@v4
